@@ -1,0 +1,9 @@
+name=Rumble Bumble
+description=Destroy the housing of the bumble bees because they're attacking your folk on the fields.
+mappath=test
+moneyreward=127
+expreward=27
+retryable=false
+difficulty=1
+minlevel=0
+maxlevel=3

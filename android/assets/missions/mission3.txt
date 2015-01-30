@@ -1,0 +1,9 @@
+name=Mole damping
+description=Destroy the housing of the bumble bees because they're attacking your folk on the fields.
+mappath=test
+moneyreward=345
+expreward=46
+retryable=false
+difficulty=2
+minlevel=1
+maxlevel=2

@@ -1,0 +1,435 @@
+{
+	"com.badlogic.gdx.graphics.Color": {
+		"white": { 
+			"r": 1,
+			"g": 1,
+			"b": 1,
+			"a": 1
+		},
+		"black": { 
+			"r": 0,
+			"g": 0,
+			"b": 0,
+			"a": 1
+		},
+		"red": { 
+			"r": 1,
+			"g": 0,
+			"b": 0,
+			"a": 1
+		},
+		"green": { 
+			"r": 0,
+			"g": 1,
+			"b": 0,
+			"a": 1
+		},
+		"blue": { 
+			"r": 0,
+			"g": 0,
+			"b": 1,
+			"a": 1 
+		},
+		"yellow": { 
+			"r": 1,
+			"g": 1,
+			"b": 0,
+			"a": 1 
+		},
+		"darkyellow": { 
+			"r": 0.65,
+			"g": 0.65,
+			"b": 0,
+			"a": 1 
+		},
+		"lightgrey": { 
+			"r": 0.6,
+			"g": 0.6,
+			"b": 0.6,
+			"a": 1
+		},
+		"grey": { 
+			"r": 0.4,
+			"g": 0.4,
+			"b": 0.4,
+			"a": 1
+		},
+		"darkgrey": { 
+			"r": 0.2,
+			"g": 0.2,
+			"b": 0.2,
+			"a": 1
+		},
+		"lightbrown": { 
+			"r": 0.8,
+			"g": 0.4,
+			"b": 0.1,
+			"a": 1
+		},
+		"darkbrown": { 
+			"r": 0.2,
+			"g": 0.1,
+			"b": 0.025,
+			"a": 1
+		}
+	},
+	
+	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+		"courier_24": { 
+			"file": "res/fonts/courier/24.fnt"
+		},
+		"courier_32": { 
+			"file": "res/fonts/courier/32.fnt"
+		},
+		"courier_48": { 
+			"file": "res/fonts/courier/48.fnt"
+		},
+		"courier_64": { 
+			"file": "res/fonts/courier/64.fnt"
+		},
+		"courier_80": { 
+			"file": "res/fonts/courier/80.fnt"
+		},
+		
+		
+		
+		"fixedsys_24": { 
+			"file": "res/fonts/fixedsys/24.fnt"
+		},
+		"fixedsys_32": { 
+			"file": "res/fonts/fixedsys/32.fnt"
+		},
+		"fixedsys_48": { 
+			"file": "res/fonts/fixedsys/48.fnt"
+		},
+		"fixedsys_64": { 
+			"file": "res/fonts/fixedsys/64.fnt"
+		},
+		"fixedsys_80": { 
+			"file": "res/fonts/fixedsys/80.fnt"
+		}
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+		"fixedsys_80": { 
+			"up": "button_normal_0",
+			"down": "button_normal_1",
+			"font": fixedsys_80,
+			"fontColor": black
+		},
+		"fixedsys_64": { 
+			"up": "button_normal_0",
+			"down": "button_normal_1",
+			"font": fixedsys_64,
+			"fontColor": black
+		},
+		"fixedsys_48": { 
+			"up": "button_normal_0",
+			"down": "button_normal_1",
+			"font": fixedsys_48,
+			"fontColor": black
+		},
+		"fixedsys_32": { 
+			"up": "button_normal_0",
+			"down": "button_normal_1",
+			"font": fixedsys_32,
+			"fontColor": black
+		},
+		"fixedsys_24": { 
+			"up": "button_normal_0",
+			"down": "button_normal_1",
+			"font": fixedsys_24,
+			"fontColor": black
+		},
+		
+		
+		
+		
+		"courier_80": { 
+			"up": "button_normal_0",
+			"down": "button_normal_1",
+			"font": courier_80,
+			"fontColor": black
+		},
+		"courier_64": { 
+			"up": "button_normal_0",
+			"down": "button_normal_1",
+			"font": courier_64,
+			"fontColor": black
+		},
+		"courier_48": { 
+			"up": "button_normal_0",
+			"down": "button_normal_1",
+			"font": courier_48,
+			"fontColor": black
+		},
+		"courier_32": { 
+			"up": "button_normal_0",
+			"down": "button_normal_1",
+			"font": courier_32,
+			"fontColor": black
+		},
+		"courier_24": { 
+			"up": "button_normal_0",
+			"down": "button_normal_1",
+			"font": courier_24,
+			"fontColor": black
+		},
+		
+		
+		
+		"jump": { 
+			"up": "button_jump_0",
+			"down": "button_jump_1",
+			"font": courier_64,
+			"fontColor": black
+		},
+		"left": { 
+			"up": "button_left_0",
+			"down": "button_left_1",
+			"font": courier_80,
+			"fontColor": black
+		},
+		"right": { 
+			"up": "button_right_0",
+			"down": "button_right_1",
+			"font": courier_80,
+			"fontColor": black
+		}
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+		"fixedsys_80": { 
+			"background": "button_normal_0",
+			"font": fixedsys_80,
+			"fontColor": black
+		},
+		"fixedsys_64": { 
+			"background": "button_normal_0",
+			"font": fixedsys_64,
+			"fontColor": black
+		},
+		"fixedsys_48": { 
+			"background": "button_normal_0",
+			"font": fixedsys_48,
+			"fontColor": black
+		},
+		"fixedsys_32": { 
+			"background": "button_normal_0",
+			"font": fixedsys_32,
+			"fontColor": black
+		},
+		"fixedsys_24": { 
+			"background": "button_normal_0",
+			"font": fixedsys_24,
+			"fontColor": black
+		},
+		
+		
+		
+		
+		"courier_80": { 
+			"background": "button_normal_0",
+			"font": courier_80,
+			"fontColor": black
+		},
+		"courier_64": { 
+			"background": "button_normal_0",
+			"font": courier_64,
+			"fontColor": black
+		},
+		"courier_48": { 
+			"background": "button_normal_0",
+			"font": courier_48,
+			"fontColor": black
+		},
+		"courier_32": { 
+			"background": "button_normal_0",
+			"font": courier_32,
+			"fontColor": black
+		},
+		"courier_24": { 
+			"background": "button_normal_0",
+			"font": courier_24,
+			"fontColor": black
+		}
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle": {
+		"green": {
+			"background": "progressbar",
+			"knobAfter": "transparent",
+			"knobBefore": "progressbar_fill_green"		
+		},
+		"blue": {
+			"background": "progressbar",
+			"knobAfter": "transparent",
+			"knobBefore": "progressbar_fill_blue"		
+		},
+		"orange": {
+			"background": "progressbar",
+			"knobAfter": "transparent",
+			"knobBefore": "progressbar_fill_orange"		
+		},
+		"red": {
+			"background": "progressbar",
+			"knobAfter": "transparent",
+			"knobBefore": "progressbar_fill_red"		
+		},
+		"yellow": {
+			"background": "progressbar",
+			"knobAfter": "transparent",
+			"knobBefore": "progressbar_fill_yellow"		
+		},
+		"violett": {
+			"background": "progressbar",
+			"knobAfter": "transparent",
+			"knobBefore": "progressbar_fill_violett"		
+		}
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+		"fixedsys_80": { 
+			"background": "button_normal_0",
+			"font": fixedsys_80,
+			"fontColor": black
+		},
+		"fixedsys_64": { 
+			"background": "button_normal_0",
+			"font": fixedsys_64,
+			"fontColor": black
+		},
+		"fixedsys_48": { 
+			"background": "button_normal_0",
+			"font": fixedsys_48,
+			"fontColor": black
+		},
+		"fixedsys_32": { 
+			"background": "button_normal_0",
+			"font": fixedsys_32,
+			"fontColor": black
+		},
+		"fixedsys_24": { 
+			"background": "button_normal_0",
+			"font": fixedsys_24,
+			"fontColor": black
+		},
+		
+		
+		
+		
+		"courier_80": { 
+			"background": "button_normal_0",
+			"font": courier_80,
+			"fontColor": black
+		},
+		"courier_64": { 
+			"background": "button_normal_0",
+			"font": courier_64,
+			"fontColor": black
+		},
+		"courier_48": { 
+			"background": "button_normal_0",
+			"font": courier_48,
+			"fontColor": black
+		},
+		"courier_32": { 
+			"background": "button_normal_0",
+			"font": courier_32,
+			"fontColor": black
+		},
+		"courier_24": { 
+			"background": "button_normal_0",
+			"font": courier_24,
+			"fontColor": black
+		}
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle": {
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle": {
+		"fixedsys_80": { 
+			"background": "button_normal_0",
+			"selection": "button_normal_0",
+			"fontColorSelected": "lightbrown",
+			"fontColorUnselected": "darkbrown",
+			"font": fixedsys_80
+		},
+		"fixedsys_64": { 
+			"background": "button_normal_0",
+			"selection": "button_normal_0",
+			"fontColorSelected": "lightbrown",
+			"fontColorUnselected": "darkbrown",
+			"font": fixedsys_64,
+		},
+		"fixedsys_48": { 
+			"background": "button_normal_0",
+			"selection": "button_normal_0",
+			"fontColorSelected": "lightbrown",
+			"fontColorUnselected": "darkbrown",
+			"font": fixedsys_48,
+		},
+		"fixedsys_32": { 
+			"background": "button_normal_0",
+			"selection": "button_normal_0",
+			"fontColorSelected": "lightbrown",
+			"fontColorUnselected": "darkbrown",
+			"font": fixedsys_32,
+		},
+		"fixedsys_24": { 
+			"background": "button_normal_0",
+			"selection": "button_normal_0",
+			"fontColorSelected": "lightbrown",
+			"fontColorUnselected": "darkbrown",
+			"font": fixedsys_24,
+		},
+		
+		
+		
+		
+		"courier_80": { 
+			"background": "button_normal_0",
+			"selection": "button_normal_0",
+			"fontColorSelected": "lightbrown",
+			"fontColorUnselected": "darkbrown",
+			"font": courier_80,
+		},
+		"courier_64": { 
+			"background": "button_normal_0",
+			"selection": "button_normal_0",
+			"fontColorSelected": "lightbrown",
+			"fontColorUnselected": "darkbrown",
+			"font": courier_64,
+		},
+		"courier_48": { 
+			"background": "button_normal_0",
+			"selection": "button_normal_0",
+			"fontColorSelected": "lightbrown",
+			"fontColorUnselected": "darkbrown",
+			"font": courier_48,
+		},
+		"courier_32": { 
+			"background": "button_normal_0",
+			"selection": "button_normal_0",
+			"fontColorSelected": "lightbrown",
+			"fontColorUnselected": "darkbrown",
+			"font": courier_32,
+		},
+		"courier_24": { 
+			"background": "button_normal_0",
+			"selection": "button_normal_0",
+			"fontColorSelected": "lightbrown",
+			"fontColorUnselected": "darkbrown",
+			"font": courier_24,
+		}
+	},
+	
+	"com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {
+	}
+}

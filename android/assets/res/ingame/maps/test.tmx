@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="30" tilewidth="32" tileheight="32" nextobjectid="82">
+ <properties>
+  <property name="ambientcolor" value="0.2,0.2,0.2,0.1"/>
+ </properties>
+ <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32">
+  <image source="tilesets/terrain.png" trans="bf7bc7" width="1920" height="1920"/>
+  <tile id="124">
+   <objectgroup draworder="index"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="3601" name="setup" tilewidth="32" tileheight="32">
+  <image source="tilesets/setup.png" trans="bf7bc7" width="384" height="384"/>
+  <tile id="0">
+   <properties>
+    <property name="p1" value=""/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="finish" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="3745" name="ambient" tilewidth="32" tileheight="32">
+  <image source="tilesets/ambient.png" trans="bf7bc7" width="480" height="960"/>
+ </tileset>
+ <layer name="background" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1EENwDAAA7F+B2zAxnwsGimxpaNwzznn0bUAWqR/uhZAi/RP1wJokf7pWgAt0j9dC6BF+qdrAbRI/3QtgBbpn64F0OLV1QBapH+6FkCL9E/XAmiR/ulaAC3SP10LoEX6p2sBtEj/dC2AFumfrgXQIv3TtQBapH+6FkCL9E/XAmiR/ulaAC0+XQ2gRfqnawG0SP90LYAW6Z+uBdAi/dO1AFqkf7oWQIv0T9cCaJH+6VoALdI/XQugRfqnawG0+AFxmBM2
+  </data>
+ </layer>
+ <layer name="background 1" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt3T1ygzAQBlDc+kDJDXyg+P4zSeMGC9BKC4L4vSYZD8hKiv3QDzBNZY+Fz49wH3x+Zrsj/48Ao6zVy8fsZ8u5Le0CcH1b2VHKkMg1fM2x98LvPeOPnnNlHvBJ9prrKdXSSH1t7VfG35ORQwC8q62rpeOWMmQrWzKzJzquiTAGAT5JaQ5o69g9rs232ozU5tacqukHAG21Mqu+jqrTNd/7dZum79vuXQG4tOwMiVzj98737JVBP3/Z8VzID3NUAOu1cNQ+pugcWUY9N2cFkOPI+l86p2eNPkp2AOR4Xc8fXVeXsuOofozcOwDwX2Tsgc34vta5rOicVjQ7ZAhA3Np95TXPJlk6d95u6zgouja/dZysAHgXrY1rNb1nLX5r/BFtb94XGQEwXnatndd2c0QA1zSybssOgGs6Q90+Qx8AqNd7v95879Oe92n3tu0ecoBcvdf+W3umMut27zNUatsyHgLI07JP92VtjSNjz21rdqz1R4YA5OkZS+x1vR+dO5MLAHlqaupe6weR+p/VBxkC0C/y7Knsd5nXWLovUAYAnM9Z3tHR807BzH4AcB1Zc1X27QIAANnMVQEQZU0dgFayAwAAzucX5ocX1w==
+  </data>
+ </layer>
+ <layer name="terrain" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt19sKwjAURUEvX63+vBUpKKiYk6anSWcgb8XmaS97OAAAAAAAAAAAAMC6LtO5Fh4A0A8AIvQDgAj9ACBCPwCI0A8AIvQDYD+O0zlN57zAb+kHQDtL7nVrpXfVD4B19dSUh2/31Q+AOvO+zifShZqmZPQo0g79AFjHlr9T9APYu9dtu/3xfOaml7671V2j7dAPYCTf+rHl//7Z9AOg/Ptj72raoR/ASPSjjH4APOnHb7W90A9gVPrxbule6Acwqhb9iGxwVrta90I/gFHVbPha2/vpXp/e/e9zmQdgFNl7qh8AfcreU/0A6FP2nuoHQJ+y91Q/APp0B6H2Ymw=
+  </data>
+ </layer>
+ <layer name="terrain 1" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1pCaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4Aa7gAAB
+  </data>
+ </layer>
+ <layer name="terrain 2" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt2kEKgCAQBVAvVtn9L1XtJBQsyil4D2YX5mo+n0oJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYKxpnzX6EgAA8DNzMUvwXf5C9wAAAEbQPQAAgLccfaP8RqR7AFAjLwDinHdwz0T9+yUvAMZr5cSdHZwbZ7Wypfbu3ufkBcCzcrrWGexeAAAAAADgizZSohP2
+  </data>
+ </layer>
+ <layer name="ambient" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt29ENgjAUBVAmYP9fDQM4gnEB4wJuYFxB+DAaI1Isbamek/QX3te9PAJNAwAAAAAAAAAAAAAAAAAAAAAAAKRyaEtPAECImvK6plkB1mKTMTtry+lh3q4/p8rmBshhF5GNS/RBzDVK9NFwz6s+AYjqj1Rq21MA/knXPk7I+5mSmT733qlmtXsAjPPsDwDLsXsAAACpHPtdY/t0znYPAN7QFwDlvGZwyNkXyml9AZDfWE98k8GXmd1y/yd86vvjqS7TFwDxPmW47AUAAAAAAADgl90ABItLyA==
+  </data>
+ </layer>
+ <layer name="ambient 1" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt2LsNgCAUQNE3Afv3OoCruJGhsDYY+XpOQkmgui8QAQAAAAAAAAAAAAAAAAAAAAAAANS0p4gz9b4FAE9m6vVMdwX4I50GIMvz4F5v50KvvQCsx1wAGNtR0OieTS892/wBaE97AQAAAGAOm388AADgI94XAO3VbK+uA6xD0wEAAAAAAABYzQVBLRhk
+  </data>
+ </layer>
+ <layer name="system" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt2jENAEAIBEEUkDz+xaKA6gtCMqNgu2suAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPhVuV0AwEX2AwAAAAAAAAAAAAB2PZ9eAAAAAAAAAACAUQNZ+ABg
+  </data>
+ </layer>
+ <objectgroup color="#11ff00" name="collisions">
+  <object id="1" x="0" y="576" width="96" height="32"/>
+  <object id="2" x="96" y="576" width="32" height="256"/>
+  <object id="3" x="128" y="832" width="352" height="32"/>
+  <object id="4" x="480" y="800" width="192" height="32"/>
+  <object id="5" x="672" y="768" width="448" height="32"/>
+  <object id="6" x="1120" y="800" width="224" height="32"/>
+  <object id="7" x="1472" y="800" width="192" height="32"/>
+  <object id="8" x="1312" y="832" width="32" height="128"/>
+  <object id="9" x="1472" y="832" width="32" height="128"/>
+  <object id="10" x="1632" y="832" width="32" height="128"/>
+  <object id="11" x="1792" y="800" width="256" height="32"/>
+  <object id="12" x="2048" y="768" width="128" height="32"/>
+  <object id="13" x="1792" y="832" width="32" height="128"/>
+  <object id="14" x="2176" y="736" width="128" height="32"/>
+  <object id="15" x="2304" y="704" width="128" height="32"/>
+  <object id="16" x="2432" y="640" width="32" height="64"/>
+  <object id="17" x="2464" y="576" width="32" height="64"/>
+  <object id="18" x="2496" y="512" width="32" height="64"/>
+  <object id="19" x="2528" y="352" width="32" height="160"/>
+  <object id="20" x="2336" y="480" width="95" height="28"/>
+  <object id="21" x="2144" y="448" width="95" height="28"/>
+  <object id="22" x="1920" y="416" width="96" height="27"/>
+  <object id="23" x="1760" y="576" width="96" height="27"/>
+  <object id="24" x="1568" y="512" width="96" height="27"/>
+  <object id="25" x="1376" y="576" width="96" height="27"/>
+  <object id="26" x="1248" y="544" width="96" height="26"/>
+  <object id="27" x="1088" y="512" width="96" height="26"/>
+  <object id="28" x="928" y="480" width="96" height="27"/>
+  <object id="29" x="768" y="448" width="95" height="27"/>
+  <object id="30" x="544" y="512" width="159" height="28"/>
+  <object id="31" x="384" y="576" width="96" height="26"/>
+  <object id="32" x="192" y="608" width="96" height="26"/>
+ </objectgroup>
+ <objectgroup color="#ecf000" name="lights">
+  <object id="33" x="421" y="809.333" width="26" height="25.6667">
+   <properties>
+    <property name="rays" value="20"/>
+    <property name="rgba" value="0.4,0.4,0.4,0.5"/>
+    <property name="type" value="pointlight"/>
+    <property name="xray" value="true"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="34" x="548.667" y="778" width="24.3333" height="24">
+   <properties>
+    <property name="rays" value="20"/>
+    <property name="rgba" value="0.4,0.4,0.4,0.5"/>
+    <property name="type" value="pointlight"/>
+    <property name="xray" value="true"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="35" x="1284" y="779" width="26" height="25.3333">
+   <properties>
+    <property name="rays" value="20"/>
+    <property name="rgba" value="0.4,0.4,0.4,0.5"/>
+    <property name="type" value="pointlight"/>
+    <property name="xray" value="true"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="36" x="2118.33" y="746.667" width="24.3333" height="24.6667">
+   <properties>
+    <property name="rays" value="20"/>
+    <property name="rgba" value="0.4,0.4,0.4,0.5"/>
+    <property name="type" value="pointlight"/>
+    <property name="xray" value="true"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="37" x="2372.33" y="678.667" width="26.3333" height="26.3333">
+   <properties>
+    <property name="rays" value="20"/>
+    <property name="rgba" value="0.4,0.4,0.4,0.5"/>
+    <property name="type" value="pointlight"/>
+    <property name="xray" value="true"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="57" x="2197.67" y="150" width="149" height="151">
+   <properties>
+    <property name="rays" value="20"/>
+    <property name="rgba" value="0.4,0.4,0.4,0.5"/>
+    <property name="type" value="pointlight"/>
+    <property name="xray" value="true"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="77" x="1322.5" y="825" width="172.667" height="169">
+   <properties>
+    <property name="rays" value="20"/>
+    <property name="rgba" value="0.7,0.2,0.0,0.6"/>
+    <property name="type" value="pointlight"/>
+    <property name="xray" value="false"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="78" x="1642.5" y="824" width="172.667" height="169">
+   <properties>
+    <property name="rays" value="20"/>
+    <property name="rgba" value="0.7,0.2,0.0,0.6"/>
+    <property name="type" value="pointlight"/>
+    <property name="xray" value="false"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup color="#000000" name="instant death">
+  <object id="38" x="1344" y="832" width="128" height="32"/>
+  <object id="39" x="1664" y="832" width="128" height="32"/>
+  <object id="40" x="0" y="480" width="32" height="96"/>
+ </objectgroup>
+ <objectgroup color="#ff007f" name="particle effects">
+  <object id="41" x="1337" y="934" width="34.3333" height="22.6667">
+   <properties>
+    <property name="name" value="fire_big"/>
+   </properties>
+  </object>
+  <object id="45" x="1277.67" y="774" width="23" height="20">
+   <properties>
+    <property name="name" value="flower_magic"/>
+   </properties>
+  </object>
+  <object id="46" x="2123" y="742.333" width="23" height="20">
+   <properties>
+    <property name="name" value="flower_magic"/>
+   </properties>
+  </object>
+  <object id="47" x="2379.67" y="675.667" width="23" height="20">
+   <properties>
+    <property name="name" value="flower_magic"/>
+   </properties>
+  </object>
+  <object id="48" x="554.667" y="773" width="23" height="20">
+   <properties>
+    <property name="name" value="flower_magic"/>
+   </properties>
+  </object>
+  <object id="49" x="415" y="806.667" width="23" height="20">
+   <properties>
+    <property name="name" value="flower_magic"/>
+   </properties>
+  </object>
+  <object id="50" x="2114.5" y="739" width="23" height="20">
+   <properties>
+    <property name="name" value="flower_magic"/>
+   </properties>
+  </object>
+  <object id="51" x="2368.17" y="679.333" width="23" height="20">
+   <properties>
+    <property name="name" value="flower_magic"/>
+   </properties>
+  </object>
+  <object id="53" x="1291.5" y="772.333" width="23" height="20">
+   <properties>
+    <property name="name" value="flower_magic"/>
+   </properties>
+  </object>
+  <object id="54" x="544.833" y="775" width="23" height="20">
+   <properties>
+    <property name="name" value="flower_magic"/>
+   </properties>
+  </object>
+  <object id="55" x="432.167" y="804.333" width="23" height="20">
+   <properties>
+    <property name="name" value="flower_magic"/>
+   </properties>
+  </object>
+  <object id="58" x="1366.17" y="938.667" width="34.3333" height="22.6667">
+   <properties>
+    <property name="name" value="fire_big"/>
+   </properties>
+  </object>
+  <object id="59" x="1392.17" y="930.667" width="34.3333" height="22.6667">
+   <properties>
+    <property name="name" value="fire_big"/>
+   </properties>
+  </object>
+  <object id="60" x="1418.17" y="938.667" width="34.3333" height="22.6667">
+   <properties>
+    <property name="name" value="fire_big"/>
+   </properties>
+  </object>
+  <object id="61" x="1442.83" y="928" width="34.3333" height="22.6667">
+   <properties>
+    <property name="name" value="fire_big"/>
+   </properties>
+  </object>
+  <object id="62" x="1680.17" y="936" width="34.3333" height="22.6667">
+   <properties>
+    <property name="name" value="fire_big"/>
+   </properties>
+  </object>
+  <object id="63" x="1659.5" y="929.333" width="34.3333" height="22.6667">
+   <properties>
+    <property name="name" value="fire_big"/>
+   </properties>
+  </object>
+  <object id="64" x="1709.5" y="931.333" width="34.3333" height="22.6667">
+   <properties>
+    <property name="name" value="fire_big"/>
+   </properties>
+  </object>
+  <object id="65" x="1739.5" y="933.333" width="34.3333" height="22.6667">
+   <properties>
+    <property name="name" value="fire_big"/>
+   </properties>
+  </object>
+  <object id="66" x="1764.17" y="924.667" width="34.3333" height="22.6667">
+   <properties>
+    <property name="name" value="fire_big"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#ffff7f" name="entity spawn">
+  <object id="81" x="888" y="702.5" width="16.5" height="20">
+   <properties>
+    <property name="name" value="toad"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#a19ea4" name="entity direction turns">
+  <object id="79" x="669.5" y="715" width="8.5" height="55"/>
+  <object id="80" x="1115.5" y="715.5" width="8.5" height="55"/>
+ </objectgroup>
+</map>

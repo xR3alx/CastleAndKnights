@@ -1,0 +1,156 @@
+
+skin.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+button_normal_0
+  rotate: false
+  xy: 1, 85
+  size: 100, 40
+  split: 7, 7, 7, 7
+  orig: 100, 40
+  offset: 0, 0
+  index: -1
+button_normal_1
+  rotate: false
+  xy: 1, 43
+  size: 100, 40
+  split: 7, 7, 7, 7
+  orig: 100, 40
+  offset: 0, 0
+  index: 1
+table_background_dark
+  rotate: false
+  xy: 103, 85
+  size: 100, 40
+  split: 7, 7, 7, 7
+  orig: 100, 40
+  offset: 0, 0
+  index: -1
+table_background_light
+  rotate: false
+  xy: 1, 1
+  size: 100, 40
+  split: 7, 7, 7, 7
+  orig: 100, 40
+  offset: 0, 0
+  index: -1
+button_jump_0
+  rotate: false
+  xy: 103, 43
+  size: 40, 40
+  split: 4, 4, 7, 7
+  orig: 40, 40
+  offset: 0, 0
+  index: 0
+button_jump_1
+  rotate: false
+  xy: 205, 85
+  size: 40, 40
+  split: 4, 4, 7, 7
+  orig: 40, 40
+  offset: 0, 0
+  index: 1
+button_left_0
+  rotate: false
+  xy: 103, 1
+  size: 40, 40
+  split: 7, 7, 4, 4
+  orig: 40, 40
+  offset: 0, 0
+  index: 0
+button_left_1
+  rotate: false
+  xy: 145, 43
+  size: 40, 40
+  split: 7, 7, 4, 4
+  orig: 40, 40
+  offset: 0, 0
+  index: 1
+button_right_0
+  rotate: false
+  xy: 145, 1
+  size: 40, 40
+  split: 7, 7, 4, 4
+  orig: 40, 40
+  offset: 0, 0
+  index: 0
+button_right_1
+  rotate: false
+  xy: 187, 43
+  size: 40, 40
+  split: 7, 7, 4, 4
+  orig: 40, 40
+  offset: 0, 0
+  index: 1
+progressbar
+  rotate: false
+  xy: 187, 29
+  size: 60, 12
+  split: 4, 4, 5, 5
+  orig: 60, 12
+  offset: 0, 0
+  index: -1
+progressbar_fill_blue
+  rotate: false
+  xy: 187, 15
+  size: 11, 12
+  split: 5, 5, 5, 5
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+progressbar_fill_green
+  rotate: false
+  xy: 229, 71
+  size: 11, 12
+  split: 5, 5, 5, 5
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+progressbar_fill_orange
+  rotate: false
+  xy: 187, 1
+  size: 11, 12
+  split: 5, 5, 5, 5
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+progressbar_fill_red
+  rotate: false
+  xy: 200, 15
+  size: 11, 12
+  split: 5, 5, 5, 5
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+progressbar_fill_violett
+  rotate: false
+  xy: 229, 57
+  size: 11, 12
+  split: 5, 5, 5, 5
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+progressbar_fill_yellow
+  rotate: false
+  xy: 229, 43
+  size: 11, 12
+  split: 5, 5, 5, 5
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+table_background_transparent_dark
+  rotate: false
+  xy: 247, 124
+  size: 1, 1
+  split: 0, 0, 0, 0
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+transparent
+  rotate: false
+  xy: 242, 82
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1

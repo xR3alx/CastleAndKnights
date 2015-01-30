@@ -1,0 +1,10 @@
+name=Instant Heal
+type=potion
+buildinglevel=15
+cost=88
+texture=
+
+heal=10
+duration=0
+strengthincrease=0
+agilityincrease=0

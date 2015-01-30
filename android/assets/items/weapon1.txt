@@ -1,0 +1,10 @@
+name=Death Blade
+type=weapon
+buildinglevel=10
+cost=4320
+texture=itemtextures/sword_death_blade.png
+
+damage=67
+healthincrease=0
+strengthincrease=0
+agilityincrease=0

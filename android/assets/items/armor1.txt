@@ -1,0 +1,10 @@
+name=Death Armor
+type=armor
+buildinglevel=0
+cost=2938
+texture=
+
+defence=23
+healthincrease=0
+strengthincrease=0
+agilityincrease=0

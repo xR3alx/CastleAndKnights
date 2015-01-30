@@ -1,0 +1,9 @@
+name=Death from above
+description=Destroy the housing of the bumble bees because they're attacking your folk on the fields.
+mappath=test
+moneyreward=678
+expreward=97
+retryable=true
+difficulty=4
+minlevel=0
+maxlevel=10

@@ -1,0 +1,24 @@
+# Autor: Richard H #
+
+# ---| LABELS |--- #
+LABEL_Points=%amount%
+LABEL_Highscore=Highscore  %amount%
+LABEL_FailedReachHighscoreNear=You're good! You will beat the highscore, i'm sure!
+LABEL_FailedReachHighscore=Try again, you can only get better!
+LABEL_ReachedHighscore=Nice! You got the highscore.
+LABEL_SameHighscore=Just the same. Try again or aren't you good enough?
+LABEL_LoggedIn=Logged in
+LABEL_NotLoggedIn=Not logged in
+LABEL_Tutorial=Swipe on the screen to jump
+
+
+# ---| TEXTBUTTONS |--- # 
+TEXTBUTTON_Play=Play
+TEXTBUTTON_Exit=Exit
+TEXTBUTTON_Retry=Retry
+TEXTBUTTON_Return=Return
+TEXTBUTTON_Back=Back
+TEXTBUTTON_RateGame=Rate
+TEXTBUTTON_Login=Log In
+TEXTBUTTON_Leaderboards=Leaderboard
+TEXTBUTTON_Achievements=Achievements
