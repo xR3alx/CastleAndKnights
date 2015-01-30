@@ -79,7 +79,7 @@ public class IngameScreen implements Screen {
 			
 			guiManager = new GUIManager();
 			entityManager = new EntityManager(world, rayHandler);
-			mapManager = new MapManager("ingame/maps/test.tmx");
+			mapManager = new MapManager("ingame/maps/" + mission.mappath + ".tmx");
 			mapManager.setupMap(rayHandler, world, entityManager);
 			
 			
