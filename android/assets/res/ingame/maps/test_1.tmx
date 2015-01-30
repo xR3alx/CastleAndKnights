@@ -57,7 +57,7 @@
  </layer>
  <layer name="system" width="400" height="30">
   <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T+1pCaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4Aa7gAAB
+   eJzt1UEJAAAIADETCNo/rC0EZStwz4sAAAAAAAAAAAAAAAAAAAAAAAAAAIAbKnd7vdwD4Af/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPhiE3ABg
   </data>
  </layer>
  <objectgroup color="#11ff00" name="collisions">
