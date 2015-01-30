@@ -1,6 +1,6 @@
 name=Death from above
 description=Destroy the housing of the bumble bees because they're attacking your folk on the fields.
-mappath=test
+mappath=test_1
 moneyreward=678
 expreward=97
 retryable=true
