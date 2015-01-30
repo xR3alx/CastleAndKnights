@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="400" height="30" tilewidth="32" tileheight="32" nextobjectid="99">
+ <properties>
+  <property name="ambientcolor" value="0.2,0.2,0.2,0.1"/>
+ </properties>
+ <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32">
+  <image source="tilesets/terrain.png" trans="bf7bc7" width="1920" height="1920"/>
+  <tile id="124">
+   <objectgroup draworder="index"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="3601" name="setup" tilewidth="32" tileheight="32">
+  <image source="tilesets/setup.png" trans="bf7bc7" width="384" height="384"/>
+  <tile id="0">
+   <properties>
+    <property name="p1" value=""/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="finish" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="3745" name="ambient" tilewidth="32" tileheight="32">
+  <image source="tilesets/ambient.png" trans="bf7bc7" width="480" height="960"/>
+ </tileset>
+ <layer name="background" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1pCaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4Aa7gAAB
+  </data>
+ </layer>
+ <layer name="background 1" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1pCaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4Aa7gAAB
+  </data>
+ </layer>
+ <layer name="terrain" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt1cENgjAABdBW1G3UudQJ1IGcQJ1LXUA4mBjSQKgYUvNe8i8E+D31hwAAAAAAAAAAAAAAAAAAAAAQwmnqAwBQJPsBQA77AUAO+wFADvsBQI5v9mNeZznwm0OdYysAlKd9l7fz3pdmKxZh2F7EOrM61ccz+wHwH649uQ34V7MXVc87l0QHAOV59OQ5ct890QFAedaxO5s4bt8q0QFAeXaxO/uR7/dtogOA8tgPAH7h7H4HAAAAAAAAAAAAAIBJvQDvDDIx
+  </data>
+ </layer>
+ <layer name="terrain 2" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzt2rsJACAQRMFtzE//VWkoWoCIM/Dyiza6BAAAAAAAAAAAAAAAAAAAACBptw8AAAAAAAAAgA+VWd0C4D09556v+c8CAAAAAAAAAAAAAAAAAAAAAAAAAABeNABthAOm
+  </data>
+ </layer>
+ <layer name="ambient" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1pCaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4Aa7gAAB
+  </data>
+ </layer>
+ <layer name="ambient 1" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1pCaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4Aa7gAAB
+  </data>
+ </layer>
+ <layer name="system" width="400" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1pCaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4Aa7gAAB
+  </data>
+ </layer>
+ <objectgroup color="#11ff00" name="collisions">
+  <object id="85" x="4449.82" y="512.182" width="92" height="29.4545"/>
+  <object id="86" x="4153.82" y="512" width="258.515" height="12"/>
+  <object id="88" x="4402" y="512" width="8.33333" height="159.667"/>
+  <object id="89" x="4145.67" y="320.333" width="9.66667" height="204.333"/>
+  <object id="90" x="4610.06" y="480" width="59.6875" height="29.125"/>
+  <object id="91" x="4738.18" y="544.182" width="59.8182" height="26.9091"/>
+  <object id="94" x="4866.12" y="512.375" width="91.625" height="27.875"/>
+  <object id="97" x="5026.91" y="480.182" width="156.909" height="12"/>
+  <object id="98" x="5027.33" y="480.667" width="21" height="223.333"/>
+ </objectgroup>
+ <objectgroup color="#ecf000" name="lights"/>
+ <objectgroup color="#000000" name="instant death"/>
+ <objectgroup color="#ff007f" name="particle effects"/>
+ <objectgroup color="#ffff7f" name="entity spawn"/>
+ <objectgroup color="#a19ea4" name="entity direction turns"/>
+</map>
