@@ -8,7 +8,7 @@ public class Entity {
 	public WeaponBodyData weaponBodyData;
 	public boolean jumped, canJump;
 	public boolean animationFalling, animationJump, animationRun, animationAttack;
-	public Body body, weaponBody;
+	public Body body, weaponBody, playerSensorBody;
 	public int health, movespeed;
 	
 	public void update(){

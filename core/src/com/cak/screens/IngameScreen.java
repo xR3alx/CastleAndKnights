@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.cak.assets.Assets;
 import com.cak.bodydata.EnemyWeaponBodyData;
 import com.cak.bodydata.EntityBodyData;
+import com.cak.bodydata.EntityPlayerSensorBodyData;
 import com.cak.bodydata.EntityTurnBodyData;
 import com.cak.bodydata.FinishBodyData;
 import com.cak.bodydata.GroundBodyData;
@@ -154,30 +155,52 @@ public class IngameScreen implements Screen {
 				Body bodyA = contact.getFixtureA().getBody();
 				Body bodyB = contact.getFixtureB().getBody();
 				
-				if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof GroundBodyData){
+				if((bodyA.getUserData() instanceof PlayerBodyData || bodyA.getUserData() instanceof EntityBodyData) && bodyB.getUserData() instanceof GroundBodyData){   // Ground
 					contact.setRestitution(0);
-					entityManager.getPlayer().setCanJump(true);
-				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof GroundBodyData){
+					if(bodyA.getPosition().y > (bodyB.getPosition().y + ((GroundBodyData) bodyB.getUserData()).height)){
+						entityManager.getPlayer().setCanJump(true);
+					}
+				}else if((bodyB.getUserData() instanceof PlayerBodyData || bodyB.getUserData() instanceof EntityBodyData) && bodyA.getUserData() instanceof GroundBodyData){
 					contact.setRestitution(0);
-					entityManager.getPlayer().setCanJump(true);
-				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof FinishBodyData){
+					if(bodyB.getPosition().y > (bodyA.getPosition().y + ((GroundBodyData) bodyA.getUserData()).height)){
+						entityManager.getPlayer().setCanJump(true);
+					}
+				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof FinishBodyData){   // Finish
 					finishReached = true;
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof FinishBodyData){
 					finishReached = true;
-				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof InstantDeathBodyData){
+				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EntityPlayerSensorBodyData){   // EntityPlayerSensor
+					if(!((EntityPlayerSensorBodyData) bodyB.getUserData()).turned){
+						((EntityPlayerSensorBodyData) bodyB.getUserData()).playerPos = bodyA.getPosition();
+						((EntityPlayerSensorBodyData) bodyB.getUserData()).turn = true;
+					}
+				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EntityPlayerSensorBodyData){
+					if(!((EntityPlayerSensorBodyData) bodyA.getUserData()).turned){
+						((EntityPlayerSensorBodyData) bodyA.getUserData()).playerPos = bodyB.getPosition();
+						((EntityPlayerSensorBodyData) bodyA.getUserData()).turn = true;
+					}
+				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof InstantDeathBodyData){   // InstantDeath
 					entityManager.getPlayer().health = 0;
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof InstantDeathBodyData){
 					entityManager.getPlayer().health = 0;
-				}else if(bodyA.getUserData() instanceof EntityBodyData && bodyB.getUserData() instanceof EntityTurnBodyData){
+				}else if(bodyA.getUserData() instanceof EntityBodyData && bodyB.getUserData() instanceof EntityTurnBodyData){   // EntityTurn
 					((EntityBodyData) bodyA.getUserData()).turn = true;
 				}else if(bodyB.getUserData() instanceof EntityBodyData && bodyA.getUserData() instanceof EntityTurnBodyData){
 					((EntityBodyData) bodyB.getUserData()).turn = true;
-				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EnemyWeaponBodyData){
-					((EnemyWeaponBodyData) bodyB.getUserData()).attacking = true;
-					((EnemyWeaponBodyData) bodyB.getUserData()).hitPlayer = true;
+				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EnemyWeaponBodyData){   // EnemyWeapon
+					if(((EnemyWeaponBodyData) bodyB.getUserData()).canAttack){
+						((EnemyWeaponBodyData) bodyB.getUserData()).attacking = true;
+						((EnemyWeaponBodyData) bodyB.getUserData()).canAttack = false;
+
+						entityManager.getPlayer().health -= ((EnemyWeaponBodyData) bodyB.getUserData()).damage;
+					}
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EnemyWeaponBodyData){
-					((EnemyWeaponBodyData) bodyA.getUserData()).attacking = true;
-					((EnemyWeaponBodyData) bodyA.getUserData()).hitPlayer = true;
+					if(((EnemyWeaponBodyData) bodyA.getUserData()).canAttack){
+						((EnemyWeaponBodyData) bodyA.getUserData()).attacking = true;
+						((EnemyWeaponBodyData) bodyA.getUserData()).canAttack = false;
+
+						entityManager.getPlayer().health -= ((EnemyWeaponBodyData) bodyA.getUserData()).damage;
+					}
 				}
 			}
 			
@@ -187,18 +210,26 @@ public class IngameScreen implements Screen {
 				Body bodyB = contact.getFixtureB().getBody();		
 				
 				
-				if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof GroundBodyData){
-					if(bodyA.getPosition().y-2 > bodyB.getPosition().y){
+				if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof GroundBodyData){   // Ground
+					if(bodyA.getPosition().y > (bodyB.getPosition().y + ((GroundBodyData) bodyB.getUserData()).height)){
 						entityManager.getPlayer().setCanJump(false);
 					}
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof GroundBodyData){
-					if(bodyB.getPosition().y-2 > bodyA.getPosition().y){
+					if(bodyB.getPosition().y > (bodyA.getPosition().y + ((GroundBodyData) bodyA.getUserData()).height)){
 						entityManager.getPlayer().setCanJump(false);
 					}
-				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EnemyWeaponBodyData){
+				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EnemyWeaponBodyData){   // EnemyWeapon
 					((EnemyWeaponBodyData) bodyB.getUserData()).hitPlayer = false;
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EnemyWeaponBodyData){
 					((EnemyWeaponBodyData) bodyA.getUserData()).hitPlayer = false;
+				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EntityPlayerSensorBodyData){   // EntityPlayerSensor
+					if(((EntityPlayerSensorBodyData) bodyB.getUserData()).turned){
+						((EntityPlayerSensorBodyData) bodyB.getUserData()).turned = false;
+					}
+				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EntityPlayerSensorBodyData){
+					if(!((EntityPlayerSensorBodyData) bodyA.getUserData()).turned){
+						((EntityPlayerSensorBodyData) bodyB.getUserData()).turned = false;
+					}
 				}
 			}
 			

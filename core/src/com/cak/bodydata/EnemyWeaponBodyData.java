@@ -7,7 +7,8 @@ import com.cak.bodyuserdata.SpriteAnimationUserData;
 
 public class EnemyWeaponBodyData extends SpriteAnimationUserData{
 
-	public boolean attacking, hitPlayer;
+	public boolean attacking, hitPlayer, canAttack;
+	public float damage;
 	
 	public EnemyWeaponBodyData(Array<AtlasRegion> textures, float frameDuration,
 			PlayMode playMode, boolean repeat, float width, float height) {

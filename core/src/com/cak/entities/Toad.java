@@ -12,12 +12,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.cak.assets.Assets;
 import com.cak.bodydata.EnemyWeaponBodyData;
 import com.cak.bodydata.EntityBodyData;
+import com.cak.bodydata.EntityPlayerSensorBodyData;
 import com.cak.ingame.MapManager;
 import com.cak.screens.IngameScreen;
 import com.cak.worldobjects.ContactFilters;
@@ -26,7 +28,8 @@ public class Toad extends Entity {
 
 	private EntityBodyData entityBodyData;
 	private EnemyWeaponBodyData enemyWeaponBodyData;
-	private boolean move, left, right, attack;
+	private EntityPlayerSensorBodyData entityPlayerSensorBodyData;
+	private boolean move, left, right;
 	private PointLight light;
 	
 	private int attackingStamina;
@@ -53,6 +56,9 @@ public class Toad extends Entity {
 		entityBodyData = new EntityBodyData(Assets.get("ingame/gfx/animations/player_notex.pack", TextureAtlas.class).getRegions(), 1 / 10f, PlayMode.LOOP, true, 12 * MapManager.unitScale, 20 * MapManager.unitScale);
 		body.setUserData(entityBodyData);
 		
+		
+		
+		
 		BodyDef bodyDefWeapon = new BodyDef();
 		bodyDefWeapon.position.set(body.getPosition().x + (65 / IngameScreen.PIXELS_TO_METERS), body.getPosition().y + (15 / IngameScreen.PIXELS_TO_METERS));
 		bodyDefWeapon.type = BodyType.DynamicBody;
@@ -78,8 +84,36 @@ public class Toad extends Entity {
 		enemyWeaponBodyData.stop();
 		weaponBody.setUserData(enemyWeaponBodyData);
 	
+		
+		
+		
+		BodyDef bodyDefPlayerSensor = new BodyDef();
+		bodyDefPlayerSensor.position.set(body.getPosition().x + (65 / IngameScreen.PIXELS_TO_METERS), body.getPosition().y + (15 / IngameScreen.PIXELS_TO_METERS));
+		bodyDefPlayerSensor.type = BodyType.DynamicBody;
+		
+		FixtureDef fixtureDefPlayerSensor = new FixtureDef();
+		fixtureDefPlayerSensor.density = 1.0f;
+		fixtureDefPlayerSensor.friction = 0.0f;
+		fixtureDefPlayerSensor.restitution = 0.0f;
+		fixtureDefPlayerSensor.filter.categoryBits = ContactFilters.CAT_ENTITIES;
+		fixtureDefPlayerSensor.filter.groupIndex = ContactFilters.GROUP_ENTITIES;
+		fixtureDefPlayerSensor.filter.maskBits = ContactFilters.MASK_ENTITIES;
+		fixtureDefPlayerSensor.isSensor = true;
+		CircleShape shapePlayerSensor = new CircleShape();
+		shapePlayerSensor.setRadius(10f);
+		fixtureDefPlayerSensor.shape = shapePlayerSensor;
+		
+		playerSensorBody = world.createBody(bodyDefPlayerSensor);
+		playerSensorBody.createFixture(fixtureDefPlayerSensor);
+		
+		entityPlayerSensorBodyData = new EntityPlayerSensorBodyData();
+		playerSensorBody.setUserData(entityPlayerSensorBodyData);
+		
+
 		shape.dispose();
 		shapeWeapon.dispose();
+		shapePlayerSensor.dispose();
+		
 		
 		
 		light = new PointLight(rayHandler, 20, new Color(1f, 0.7f, 0.3f, 0.7f), 15, 0, 0);
@@ -89,23 +123,36 @@ public class Toad extends Entity {
 		
 		health = 10;
 		movespeed = 4;
+		enemyWeaponBodyData.damage = 5f;
+		enemyWeaponBodyData.canAttack = true;
 		
-		int randomMove = new Random().nextInt(2);
-		if(randomMove == 0){
-			right = true;
-		}else{
-			left = true;
-		}
+		turnRandom();
 	}
 	
 	@Override
 	public void update() {
 		super.update();
 		if(entityBodyData.turn){
-			turn();
+			turn(false);
 		}
 		checkInput();
 		body.setTransform(body.getPosition(), 0);
+		playerSensorBody.setTransform(body.getPosition(), 0);
+		
+		
+		if(entityPlayerSensorBodyData.turn && !entityPlayerSensorBodyData.turned){
+			entityPlayerSensorBodyData.turn = false;
+			entityPlayerSensorBodyData.turned = true;
+			
+			if(entityPlayerSensorBodyData.playerPos.x < body.getPosition().x){
+				turn(true);
+			}else{
+				turn(false);
+			}
+		}else{
+			entityPlayerSensorBodyData.turned = false;
+		}
+		
 		
 		if(enemyWeaponBodyData.attacking && attackingStamina >= 100){
 			if(attackingStamina > 100){
@@ -115,6 +162,7 @@ public class Toad extends Entity {
 			
 			if(enemyWeaponBodyData.isFinished(Gdx.graphics.getDeltaTime(), true)){
 				enemyWeaponBodyData.stop();
+				enemyWeaponBodyData.canAttack = true;
 				enemyWeaponBodyData.attacking = false;
 			}
 		}else{
@@ -122,13 +170,16 @@ public class Toad extends Entity {
 				attackingStamina+=51;
 			}
 		}
-		if(right){
-			weaponBody.setTransform(new Vector2(body.getPosition().x + (65 / IngameScreen.PIXELS_TO_METERS), body.getPosition().y + (15 / IngameScreen.PIXELS_TO_METERS)), weaponBody.getAngle());
-			enemyWeaponBodyData.setFlip(false, false);
-		}else if(left){
+		
+		
+		if(left){
 			weaponBody.setTransform(new Vector2(body.getPosition().x - (65 / IngameScreen.PIXELS_TO_METERS), body.getPosition().y + (15 / IngameScreen.PIXELS_TO_METERS)), weaponBody.getAngle());
 			enemyWeaponBodyData.setFlip(true, false);
+		}else if(right){
+			weaponBody.setTransform(new Vector2(body.getPosition().x + (65 / IngameScreen.PIXELS_TO_METERS), body.getPosition().y + (15 / IngameScreen.PIXELS_TO_METERS)), weaponBody.getAngle());
+			enemyWeaponBodyData.setFlip(false, false);
 		}
+		
 		
 		if(body.getLinearVelocity().y < 0){
 			if(!animationFalling){
@@ -160,13 +211,22 @@ public class Toad extends Entity {
 	
 	
 	
-	public void turn(){
-		if(right){
-			left = true;
-			right = false;
-		}else{
+	public void turnRandom(){
+		int randomMove = new Random().nextInt(2);
+		if(randomMove == 0){
 			right = true;
-			left = false;
+		}else{
+			left = true;
+		}
+	}
+	
+	public void turn(boolean left){
+		if(right){
+			this.left = true;
+			right = false;
+		}else if(!left){
+			right = true;
+			this.left = false;
 		}
 		
 		entityBodyData.turn = false;

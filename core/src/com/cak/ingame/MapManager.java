@@ -102,12 +102,16 @@ public class MapManager {
 				Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 				
 				PolygonObject poly = new PolygonObject(world, new Vector2((rectangle.x + rectangle.width / 2) * mapRenderer.getUnitScale(), (rectangle.y+ rectangle.height / 2) * mapRenderer.getUnitScale()), BodyType.StaticBody, rectangle.width * mapRenderer.getUnitScale(), rectangle.height * mapRenderer.getUnitScale(), 1.0f, 0.0f, 0.0f, false, true, ContactFilters.CAT_MAP, ContactFilters.GROUP_WORLD, ContactFilters.MASK_MAP);
-				poly.getBody().setUserData(new GroundBodyData());
+				GroundBodyData groundBodyData = new GroundBodyData();
+				groundBodyData.height = (rectangle.height - 20) * mapRenderer.getUnitScale();
+				poly.getBody().setUserData(groundBodyData);
 			}else if(object instanceof EllipseMapObject) {
 				Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
 				
 				CircleObject circle = new CircleObject(world, new Vector2((ellipse.x + ellipse.width / 2) * mapRenderer.getUnitScale(), (ellipse.y + ellipse.height / 2) * mapRenderer.getUnitScale()), BodyType.StaticBody, ellipse.width / 2 * mapRenderer.getUnitScale(), 1.0f, 0.0f, 0.0f, false, true, ContactFilters.CAT_MAP, ContactFilters.GROUP_WORLD, ContactFilters.MASK_MAP);
-				circle.getBody().setUserData(new FinishBodyData());
+				GroundBodyData groundBodyData = new GroundBodyData();
+				groundBodyData.height = (ellipse.width / 2 - 20) * mapRenderer.getUnitScale();
+				circle.getBody().setUserData(groundBodyData);
 			}
 		}
 		
