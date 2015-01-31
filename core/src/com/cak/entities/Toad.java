@@ -147,7 +147,9 @@ public class Toad extends Entity {
 			if(entityPlayerSensorBodyData.playerPos.x < body.getPosition().x){
 				turn(true);
 			}else{
-				turn(false);
+				if(left && !right){
+					turn(false);
+				}
 			}
 		}else{
 			entityPlayerSensorBodyData.turned = false;
