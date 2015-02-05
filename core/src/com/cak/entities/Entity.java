@@ -10,6 +10,11 @@ public class Entity {
 	public boolean animationFalling, animationJump, animationRun, animationAttack;
 	public Body body, weaponBody, playerSensorBody;
 	public int health, movespeed;
+	public int id;
+	
+	public Entity(int id) {
+		this.id = id;
+	}
 	
 	public void update(){
 		

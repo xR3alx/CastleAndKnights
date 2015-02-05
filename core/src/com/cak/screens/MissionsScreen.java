@@ -55,7 +55,7 @@ public class MissionsScreen{
 				}else if(event.getListenerActor().equals(optionsTextButton)){
 					// TODO Switch to/show options
 				}else if(event.getListenerActor().equals(playTextButton)){
-					((Game) Gdx.app.getApplicationListener()).setScreen(new IngameScreen(Main.missionLoader.getMissions().get(list.getSelected())));
+					Main.changeScreen(new IngameScreen(Main.missionLoader.getMissions().get(list.getSelected())));
 				}else if(event.getListenerActor().equals(list)){
 					missionNameLabel.setText(list.getSelected());
 					missionDescriptionLabel.setText(Main.missionLoader.getMissions().get(list.getSelected()).description);

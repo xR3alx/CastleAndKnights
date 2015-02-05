@@ -8,10 +8,12 @@ import com.cak.bodyuserdata.SpriteAnimationUserData;
 public class EntityBodyData extends SpriteAnimationUserData{
 
 	public boolean turn;
+	public int entityId;
 	
-	public EntityBodyData(Array<AtlasRegion> textures, float frameDuration,
+	public EntityBodyData(int entityId, Array<AtlasRegion> textures, float frameDuration,
 			PlayMode playMode, boolean repeat, float width, float height) {
 		super(textures, frameDuration, playMode, repeat, width, height);
+		this.entityId = entityId;
 	}
 
 }

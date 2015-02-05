@@ -2,6 +2,7 @@ package com.cak.main;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.cak.assets.Assets;
 import com.cak.files.Configurations;
@@ -26,9 +27,9 @@ public class Main extends Game {
 	public static final int VIRTUAL_RESOLUTION_WIDTH = 1280, VIRTUAL_RESOLUTION_HEIGHT = 768;
 	public static final boolean DEBUG = true;
 	
-	private boolean itemsLoaded, missionsLoaded;
+	public static boolean itemsMissionsLoaded;;
 	
-	private LoadingScreen loadingScreen;
+	private static LoadingScreen loadingScreen;
 	
 	public Main(String desktopExtention, IActivityRequestHandler iActivityRequestHandler, GSPD gspd) {
 		this.desktopExtention = desktopExtention;
@@ -63,7 +64,7 @@ public class Main extends Game {
 		notificationsManager = new NotificationsManager();
 		
 		loadingScreen = new LoadingScreen();
-		setScreen(new MenuScreen());
+		changeScreen(new MenuScreen());
 	}
 	
 	@Override
@@ -71,22 +72,11 @@ public class Main extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		super.render();
 	
-		if(!Assets.isLoaded()){
-			if(getScreen() != loadingScreen){
-				setScreen(loadingScreen);
-			}
-		}else{
-			if(!itemsLoaded){
+		if(Assets.isLoaded()){
+			if(!itemsMissionsLoaded){
 				itemLoader = new ItemLoader();
-				itemsLoaded = true;
-			}
-			if(!missionsLoaded){
 				missionLoader = new MissionsLoader();
-				missionsLoaded = true;
-			}
-			
-			if(getScreen() != Assets.getScreenAfterLoad()){
-				setScreen(Assets.getScreenAfterLoad());
+				itemsMissionsLoaded = true;
 			}
 		}
 	}
@@ -114,4 +104,10 @@ public class Main extends Game {
 		super.dispose();
 		Assets.dispose();
 	}
+	 
+	 
+	 
+	 public static void changeScreen(Screen screen){
+		 loadingScreen.changeNextScreen(screen);
+	 }
 }

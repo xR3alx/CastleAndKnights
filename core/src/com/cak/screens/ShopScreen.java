@@ -335,7 +335,7 @@ public class ShopScreen {
 				agilityincreaseInfoLabel.setText("Agility increase: " + ((WeaponItem) Main.itemLoader.getWeapons().get(list.getSelected())).agilityIncrease);
 			}
 			if(Main.itemLoader.getWeapons().get(list.getSelected()).texture != null){
-				shopPreviewSpriteActor = new SpriteActor(Main.itemLoader.getWeapons().get(list.getSelected()).texture, 0, 0, false, false);
+				shopPreviewSpriteActor = new SpriteActor(Main.itemLoader.getWeapons().get(list.getSelected()).texture, 0, 0, false, false, MenuScreen.getCamera());
 				shopPreviewSpriteActor.setScale(4);
 			}else{
 				shopPreviewSpriteActor = null;
@@ -385,7 +385,7 @@ public class ShopScreen {
 				agilityincreaseInfoLabel.setText("Agility increase: " + ((ArmorItem) Main.itemLoader.getArmors().get(list.getSelected())).agilityIncrease);
 			}
 			if(Main.itemLoader.getArmors().get(list.getSelected()).texture != null){
-				shopPreviewSpriteActor = new SpriteActor(Main.itemLoader.getArmors().get(list.getSelected()).texture, 0, 0, false, false);
+				shopPreviewSpriteActor = new SpriteActor(Main.itemLoader.getArmors().get(list.getSelected()).texture, 0, 0, false, false, MenuScreen.getCamera());
 				shopPreviewSpriteActor.setScale(4);
 			}else{
 				shopPreviewSpriteActor = null;
@@ -447,7 +447,7 @@ public class ShopScreen {
 				durationInfoLabel.setText("Duration: " + timeS);
 			}
 			if(Main.itemLoader.getPotions().get(list.getSelected()).texture != null){
-				shopPreviewSpriteActor = new SpriteActor(Main.itemLoader.getPotions().get(list.getSelected()).texture, 0, 0, false, false);
+				shopPreviewSpriteActor = new SpriteActor(Main.itemLoader.getPotions().get(list.getSelected()).texture, 0, 0, false, false, MenuScreen.getCamera());
 				shopPreviewSpriteActor.setScale(4);
 			}else{
 				shopPreviewSpriteActor = null;

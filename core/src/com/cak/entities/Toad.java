@@ -34,7 +34,8 @@ public class Toad extends Entity {
 	
 	private int attackingStamina;
 
-	public Toad(World world, RayHandler rayHandler, Vector2 position) {
+	public Toad(int id, World world, RayHandler rayHandler, Vector2 position) {
+		super(id);
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(position.x, position.y);
 		bodyDef.type = BodyType.DynamicBody;
@@ -53,7 +54,7 @@ public class Toad extends Entity {
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef);
 		
-		entityBodyData = new EntityBodyData(Assets.get("ingame/gfx/animations/player_notex.pack", TextureAtlas.class).getRegions(), 1 / 10f, PlayMode.LOOP, true, 12 * MapManager.unitScale, 20 * MapManager.unitScale);
+		entityBodyData = new EntityBodyData(id, Assets.get("/ingame/gfx/animations/player_notex.pack", TextureAtlas.class).getRegions(), 1 / 10f, PlayMode.LOOP, true, 12 * MapManager.unitScale, 20 * MapManager.unitScale);
 		body.setUserData(entityBodyData);
 		
 		
@@ -80,7 +81,7 @@ public class Toad extends Entity {
 		
 		weaponBody.setGravityScale(0);
 
-		enemyWeaponBodyData = new EnemyWeaponBodyData(Assets.get("ingame/gfx/animations/weapons/sword_death_blade.pack", TextureAtlas.class).getRegions(), 1 / 10f, PlayMode.NORMAL, true, 64f * MapManager.unitScale, 64f * MapManager.unitScale);
+		enemyWeaponBodyData = new EnemyWeaponBodyData(Assets.get("/ingame/gfx/animations/weapons/sword_death_blade.pack", TextureAtlas.class).getRegions(), 1 / 10f, PlayMode.NORMAL, true, 64f * MapManager.unitScale, 64f * MapManager.unitScale);
 		enemyWeaponBodyData.stop();
 		weaponBody.setUserData(enemyWeaponBodyData);
 	
@@ -140,19 +141,16 @@ public class Toad extends Entity {
 		playerSensorBody.setTransform(body.getPosition(), 0);
 		
 		
-		if(entityPlayerSensorBodyData.turn && !entityPlayerSensorBodyData.turned){
-			entityPlayerSensorBodyData.turn = false;
-			entityPlayerSensorBodyData.turned = true;
+		if(entityPlayerSensorBodyData.follow){
+			Entity followEntity = IngameScreen.getEntityManager().getEntity(entityPlayerSensorBodyData.playerId);
 			
-			if(entityPlayerSensorBodyData.playerPos.x < body.getPosition().x){
+			if(followEntity.body.getPosition().x < body.getPosition().x){
 				turn(true);
 			}else{
 				if(left && !right){
 					turn(false);
 				}
 			}
-		}else{
-			entityPlayerSensorBodyData.turned = false;
 		}
 		
 		

@@ -31,7 +31,8 @@ public class Player extends Entity{
 	
 	private int stamina, attackingStamina;
 
-	public Player(World world, RayHandler rayHandler, Vector2 position) {
+	public Player(int id, World world, RayHandler rayHandler, Vector2 position) {
+		super(id);
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(position.x, position.y);
 		bodyDef.type = BodyType.DynamicBody;
@@ -50,7 +51,7 @@ public class Player extends Entity{
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef);
 		
-		playerBodyData = new PlayerBodyData(Assets.get("ingame/gfx/animations/player_notex.pack", TextureAtlas.class).getRegions(), 1 / 10f, PlayMode.LOOP, true, 30 * MapManager.unitScale, 42 * MapManager.unitScale);
+		playerBodyData = new PlayerBodyData(id, Assets.get("/ingame/gfx/animations/player_notex.pack", TextureAtlas.class).getRegions(), 1 / 10f, PlayMode.LOOP, true, 30 * MapManager.unitScale, 42 * MapManager.unitScale);
 		body.setUserData(playerBodyData);
 		
 		BodyDef bodyDefWeapon = new BodyDef();
@@ -74,7 +75,7 @@ public class Player extends Entity{
 		
 		weaponBody.setGravityScale(0);
 
-		weaponBodyData = new WeaponBodyData(Assets.get("ingame/gfx/animations/weapons/sword_death_blade.pack", TextureAtlas.class).getRegions(), 1 / 10f, PlayMode.NORMAL, true, 64f * MapManager.unitScale, 64f * MapManager.unitScale);
+		weaponBodyData = new WeaponBodyData(Assets.get("/ingame/gfx/animations/weapons/sword_death_blade.pack", TextureAtlas.class).getRegions(), 1 / 10f, PlayMode.NORMAL, true, 64f * MapManager.unitScale, 64f * MapManager.unitScale);
 		weaponBodyData.stop();
 		weaponBody.setUserData(weaponBodyData);
 	

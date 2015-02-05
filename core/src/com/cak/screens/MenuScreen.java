@@ -3,17 +3,17 @@ package com.cak.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cak.assets.Assets;
+import com.cak.customactors.SpriteActor;
 import com.cak.files.UserData;
 import com.cak.main.Main;
-import com.cak.notifications.NotificationsManager;
 import com.cak.utils.Utils;
 
 public class MenuScreen implements Screen {
@@ -23,6 +23,7 @@ public class MenuScreen implements Screen {
 	
 	private static Label currentLevelLabel, currentMoneyLabel;
 	private static ProgressBar levelProgressionBar;
+	private static SpriteActor backgroundSpriteActor;
 	
 	
 	private static OrthographicCamera camera;
@@ -37,32 +38,28 @@ public class MenuScreen implements Screen {
 	
 	@Override
 	public void show() {
-		if(Assets.isMenuAssetsLoaded(this)){
-			camera = new OrthographicCamera();
-			camera.setToOrtho(false, Main.VIRTUAL_RESOLUTION_WIDTH, Main.VIRTUAL_RESOLUTION_HEIGHT);
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Main.VIRTUAL_RESOLUTION_WIDTH, Main.VIRTUAL_RESOLUTION_HEIGHT);
 			
-			StretchViewport stretchViewport = new StretchViewport(Main.VIRTUAL_RESOLUTION_WIDTH, Main.VIRTUAL_RESOLUTION_HEIGHT, camera);
-			stage = new Stage(stretchViewport);
-			if(Main.DEBUG){
-				stage.setDebugAll(true);
-			}
+		StretchViewport stretchViewport = new StretchViewport(Main.VIRTUAL_RESOLUTION_WIDTH, Main.VIRTUAL_RESOLUTION_HEIGHT, camera);
+		stage = new Stage(stretchViewport);
+		if(Main.DEBUG){
+			stage.setDebugAll(true);
+		}
 			
-			castleScreen = new CastleScreen();
-			heroScreen = new HeroScreen();
-			missionScreen = new MissionsScreen();
-			shopScreen = new ShopScreen();
+		castleScreen = new CastleScreen();
+		heroScreen = new HeroScreen();
+		missionScreen = new MissionsScreen();
+		shopScreen = new ShopScreen();
 			
-			createUI();
+		createUI();
 
 			
-			changeScreen("castle");
+		changeScreen("castle");
 			
 			
-			Gdx.input.setInputProcessor(stage);
-			isLoaded = true;
-		}else{
-			Assets.loadMenuAssets(this);
-		}
+		Gdx.input.setInputProcessor(stage);
+		isLoaded = true;
 	}
 
 	@Override
@@ -114,6 +111,9 @@ public class MenuScreen implements Screen {
 		mainTable.add(upperTable).left().top().row();
 		mainTable.add(bottomTable).expand().left().top();
 		
+		backgroundSpriteActor = new SpriteActor(Assets.get("/menu/gfx/imgs/menu_background.png", Texture.class), 0, 0, true, true, camera);
+		
+		stage.addActor(backgroundSpriteActor);
 		stage.addActor(mainTable);
 		
 		
@@ -189,9 +189,6 @@ public class MenuScreen implements Screen {
 		}
 	}
 	
-	
-	
-	
 	public static void updateUI(){
 		currentLevelLabel.setText("Lv." + UserData.getInt("currentlevel"));
 		currentMoneyLabel.setText("$" + UserData.getInt("currentmoney"));
@@ -209,4 +206,11 @@ public class MenuScreen implements Screen {
 			Main.notificationsManager.addNotification("Level up!", "You reached the next Level!\nMoney reward: $" + moneyreward + "\nExp to next level: " + (int) levelProgressionBar.getMaxValue());
 		}
 	}
+
+
+
+	public static OrthographicCamera getCamera(){
+		return camera;
+	}
+	
 }

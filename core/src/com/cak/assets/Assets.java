@@ -33,11 +33,14 @@ public class Assets {
 		assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
 		assetManager.setLoader(ParticleEffect.class, new ParticleEffectLoader(new InternalFileHandleResolver()));
 		skin = new Skin(Gdx.files.internal(loadConfiguration + "/ui/skin.json"), new TextureAtlas(Gdx.files.internal(loadConfiguration + "/ui/skin.atlas")));
+		
+		
 		for (FileHandle f : Gdx.files.internal(loadConfiguration + "/itemtextures").list()) {
 			if(f.extension().equals("png")){
 				assetManager.load(f.path(), Texture.class); 
 			}
 		}
+		assetManager.load(loadConfiguration + "/menu/gfx/imgs/apollox_logo_large.png", Texture.class);
 	}
 	
 	public static boolean isLoaded(){
@@ -53,25 +56,22 @@ public class Assets {
 	}
 	
 	public static <T> T get(String file, Class<T> type){
-		return assetManager.get(loadConfiguration + "/" + file, type);
+		return assetManager.get(loadConfiguration + file, type);
+	}
+	
+	public static boolean isFileLoaded(String file){
+		return assetManager.isLoaded(loadConfiguration + file);
 	}
 	
 	public static AssetManager getAssetManager(){
 		return assetManager;
 	}
 	
-	private static void setScreenAfterLoad(Screen screen){
-		screenToSwitchAfterLoad = screen;
-	}
-	
 	public static Screen getScreenAfterLoad(){
 		return screenToSwitchAfterLoad;
 	}
 	
-	public static boolean isMenuAssetsLoaded(Screen screen){
-		if(menuAssetsLoaded){
-			setScreenAfterLoad(screen);
-		}
+	public static boolean isMenuAssetsLoaded(){
 		return menuAssetsLoaded;
 	}
 	
@@ -86,8 +86,7 @@ public class Assets {
 	
 	
 	
-	public static void loadIngameAssets(Screen screen, String mappath){
-		setScreenAfterLoad(screen);
+	public static void loadIngameAssets(String mappath){
 		unloadMenuAssets();
 		
 		for (FileHandle f : Gdx.files.internal(loadConfiguration + "/ingame/gfx/imgs/").list()) {
@@ -213,8 +212,7 @@ public class Assets {
 	
 	
 	
-	public static void loadMenuAssets(Screen screen){
-		setScreenAfterLoad(screen);
+	public static void loadMenuAssets(){
 		unloadGameAssets();
 		
 		for (FileHandle f : Gdx.files.internal(loadConfiguration + "/menu/gfx/imgs/").list()) {
@@ -259,8 +257,10 @@ public class Assets {
 	public static void unloadMenuAssets(){
 		for (FileHandle f : Gdx.files.internal(loadConfiguration + "/menu/gfx/imgs/").list()) {
 			if(f.extension().equals("png") || f.extension().equals("jpg")){
-				if(assetManager.isLoaded(f.path()))
-					assetManager.unload(f.path()); 
+				if(!f.name().contains("apollox")){
+					if(assetManager.isLoaded(f.path()))
+						assetManager.unload(f.path());
+				}
 			}
 		}
 		

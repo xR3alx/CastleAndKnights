@@ -7,9 +7,12 @@ import com.cak.bodyuserdata.SpriteAnimationUserData;
 
 public class PlayerBodyData extends SpriteAnimationUserData{
 
-	public PlayerBodyData(Array<AtlasRegion> textures, float frameDuration,
+	public int entityId;
+	
+	public PlayerBodyData(int entityId, Array<AtlasRegion> textures, float frameDuration,
 			PlayMode playMode, boolean repeat, float width, float height) {
 		super(textures, frameDuration, playMode, repeat, width, height);
+		this.entityId = entityId;
 	}
 
 }

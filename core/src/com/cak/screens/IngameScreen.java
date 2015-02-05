@@ -43,7 +43,7 @@ public class IngameScreen implements Screen {
 	private Box2DDebugRenderer debugRenderer;
 	
 	
-	private EntityManager entityManager;
+	private static EntityManager entityManager;
 	private MapManager mapManager;
 	private GUIManager guiManager;
 	
@@ -68,26 +68,22 @@ public class IngameScreen implements Screen {
 	@SuppressWarnings("static-access")
 	@Override
 	public void show() {
-		if(Assets.isIngameAssetsLoaded("/ingame/maps/" + mission.mappath + ".tmx")){
-			spriteBatch = new SpriteBatch();
+		spriteBatch = new SpriteBatch();
 			
-			world = new World(gravity, worldSleep);
-			contactListener();
-			tempBodies = new Array<Body>();
-			rayHandler = new RayHandler(world);
-			rayHandler.setGammaCorrection(true);
-			debugRenderer = new Box2DDebugRenderer();
+		world = new World(gravity, worldSleep);
+		contactListener();
+		tempBodies = new Array<Body>();
+		rayHandler = new RayHandler(world);
+		rayHandler.setGammaCorrection(true);
+		debugRenderer = new Box2DDebugRenderer();
 			
-			guiManager = new GUIManager();
-			entityManager = new EntityManager(world, rayHandler);
-			mapManager = new MapManager("ingame/maps/" + mission.mappath + ".tmx");
-			mapManager.setupMap(rayHandler, world, entityManager);
+		guiManager = new GUIManager();
+		entityManager = new EntityManager(world, rayHandler);
+		mapManager = new MapManager("/ingame/maps/" + mission.mappath + ".tmx");
+		mapManager.setupMap(rayHandler, world, entityManager);
 			
 			
-			isLoaded = true;
-		}else{
-			Assets.loadIngameAssets(this, "/ingame/maps/" + mission.mappath + ".tmx");
-		}
+		isLoaded = true;
 	}
 
 	@Override
@@ -121,13 +117,13 @@ public class IngameScreen implements Screen {
 				UserData.setProperty("levelprogression_current", UserData.getInt("levelprogression_current") + mission.expReward + monsterKillExpReward + "");
 				Main.notificationsManager.addNotification("Mission finished!", "You finished the mission " + mission.name + "\n and got a reward of $" + (mission.moneyReward + monsterKillMoneyReward) + " and EXP " + (mission.expReward + monsterKillExpReward));
 				
-				((Game) Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+				Main.changeScreen(new MenuScreen());
 			}else if(entityManager.getPlayer().health <= 0){
 				Main.notificationsManager.addNotification("Mission failed!", "You failed the mission. Be careful next time!");
 				
-				((Game) Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+				Main.changeScreen(new MenuScreen());
 			}else if(Gdx.input.isKeyJustPressed(Keys.F12)){
-				((Game) Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+				Main.changeScreen(new MenuScreen());
 			}
 		}
 	}
@@ -170,14 +166,14 @@ public class IngameScreen implements Screen {
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof FinishBodyData){
 					finishReached = true;
 				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EntityPlayerSensorBodyData){   // EntityPlayerSensor
-					if(!((EntityPlayerSensorBodyData) bodyB.getUserData()).turned){
-						((EntityPlayerSensorBodyData) bodyB.getUserData()).playerPos = bodyA.getPosition();
-						((EntityPlayerSensorBodyData) bodyB.getUserData()).turn = true;
+					if(!((EntityPlayerSensorBodyData) bodyB.getUserData()).follow){
+						((EntityPlayerSensorBodyData) bodyB.getUserData()).playerId = ((PlayerBodyData) bodyA.getUserData()).entityId;
+						((EntityPlayerSensorBodyData) bodyB.getUserData()).follow = true;
 					}
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EntityPlayerSensorBodyData){
-					if(!((EntityPlayerSensorBodyData) bodyA.getUserData()).turned){
-						((EntityPlayerSensorBodyData) bodyA.getUserData()).playerPos = bodyB.getPosition();
-						((EntityPlayerSensorBodyData) bodyA.getUserData()).turn = true;
+					if(!((EntityPlayerSensorBodyData) bodyA.getUserData()).follow){
+						((EntityPlayerSensorBodyData) bodyA.getUserData()).playerId = ((PlayerBodyData) bodyB.getUserData()).entityId;
+						((EntityPlayerSensorBodyData) bodyA.getUserData()).follow = true;
 					}
 				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof InstantDeathBodyData){   // InstantDeath
 					entityManager.getPlayer().health = 0;
@@ -189,6 +185,7 @@ public class IngameScreen implements Screen {
 					((EntityBodyData) bodyB.getUserData()).turn = true;
 				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EnemyWeaponBodyData){   // EnemyWeapon
 					if(((EnemyWeaponBodyData) bodyB.getUserData()).canAttack){
+						((EnemyWeaponBodyData) bodyB.getUserData()).attackingId = ((PlayerBodyData) bodyA.getUserData()).entityId;
 						((EnemyWeaponBodyData) bodyB.getUserData()).attacking = true;
 						((EnemyWeaponBodyData) bodyB.getUserData()).canAttack = false;
 
@@ -196,6 +193,7 @@ public class IngameScreen implements Screen {
 					}
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EnemyWeaponBodyData){
 					if(((EnemyWeaponBodyData) bodyA.getUserData()).canAttack){
+						((EnemyWeaponBodyData) bodyA.getUserData()).attackingId = ((PlayerBodyData) bodyB.getUserData()).entityId;
 						((EnemyWeaponBodyData) bodyA.getUserData()).attacking = true;
 						((EnemyWeaponBodyData) bodyA.getUserData()).canAttack = false;
 
@@ -223,12 +221,12 @@ public class IngameScreen implements Screen {
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EnemyWeaponBodyData){
 					((EnemyWeaponBodyData) bodyA.getUserData()).hitPlayer = false;
 				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EntityPlayerSensorBodyData){   // EntityPlayerSensor
-					if(((EntityPlayerSensorBodyData) bodyB.getUserData()).turned){
-						((EntityPlayerSensorBodyData) bodyB.getUserData()).turned = false;
+					if(((EntityPlayerSensorBodyData) bodyB.getUserData()).follow){
+						((EntityPlayerSensorBodyData) bodyB.getUserData()).follow = false;
 					}
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EntityPlayerSensorBodyData){
-					if(!((EntityPlayerSensorBodyData) bodyA.getUserData()).turned){
-						((EntityPlayerSensorBodyData) bodyB.getUserData()).turned = false;
+					if(!((EntityPlayerSensorBodyData) bodyA.getUserData()).follow){
+						((EntityPlayerSensorBodyData) bodyB.getUserData()).follow = false;
 					}
 				}
 			}
@@ -283,4 +281,12 @@ public class IngameScreen implements Screen {
 		}
 	}
 
+	
+	public static EntityManager getEntityManager(){
+		return entityManager;
+	}
+	
+	public Mission getCurrentMission(){
+		return mission;
+	}
 }

@@ -7,6 +7,8 @@ import com.cak.bodyuserdata.SpriteAnimationUserData;
 
 public class WeaponBodyData extends SpriteAnimationUserData{
 
+	public int hitId;
+	
 	public WeaponBodyData(Array<AtlasRegion> textures, float frameDuration,
 			PlayMode playMode, boolean repeat, float width, float height) {
 		super(textures, frameDuration, playMode, repeat, width, height);

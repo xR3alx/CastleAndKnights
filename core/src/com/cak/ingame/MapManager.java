@@ -68,10 +68,14 @@ public class MapManager {
 	
 	public void renderParticles(SpriteBatch spriteBatch, float delta){
 		for (ParticleEffect particleEffect : particleEffects) {
-			if((particleEffect.getEmitters().get(0).getX()) > (camera.position.x - camera.viewportWidth / 2)
-					&& (particleEffect.getEmitters().get(0).getX()) < (camera.position.x + camera.viewportWidth / 2)
-					&& (particleEffect.getEmitters().get(0).getY()) > (camera.position.y - camera.viewportHeight / 2)
-					&& (particleEffect.getEmitters().get(0).getY()) < (camera.position.y + camera.viewportHeight / 2)){
+			if((particleEffect.getEmitters().get(0).getX()) > ((camera.position.x - camera.viewportWidth / 2) * mapRenderer.getUnitScale())
+					&& (particleEffect.getEmitters().get(0).getX()) < ((camera.position.x + camera.viewportWidth / 2) * mapRenderer.getUnitScale())
+					&& (particleEffect.getEmitters().get(0).getY()) > ((camera.position.y - camera.viewportHeight / 2) * mapRenderer.getUnitScale())
+					&& (particleEffect.getEmitters().get(0).getY()) < ((camera.position.y + camera.viewportHeight / 2) * mapRenderer.getUnitScale())){
+//			if((particleEffect.getEmitters().get(0).getX()) > (-200 * mapRenderer.getUnitScale())
+//					&& (particleEffect.getEmitters().get(0).getX()) < (200 * mapRenderer.getUnitScale())
+//					&& (particleEffect.getEmitters().get(0).getY()) > (-200 * mapRenderer.getUnitScale())
+//					&& (particleEffect.getEmitters().get(0).getY()) < (200 * mapRenderer.getUnitScale())){
 				particleEffect.draw(spriteBatch, delta);
 			}
 		}
@@ -87,7 +91,7 @@ public class MapManager {
 			for(int y = 0; y < ((TiledMapTileLayer) tiledMap.getLayers().get("system")).getWidth(); y++){
 				if(((TiledMapTileLayer) tiledMap.getLayers().get("system")).getCell(x, y) != null){
 					if(((TiledMapTileLayer) tiledMap.getLayers().get("system")).getCell(x, y).getTile().getProperties().containsKey("p1")){
-						entityManager.spawnPlayer(new Vector2(x * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale(), y * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale()));
+						entityManager.spawnEntity("player", new Vector2(x * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale(), y * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale()));
 					}else if(((TiledMapTileLayer) tiledMap.getLayers().get("system")).getCell(x, y).getTile().getProperties().containsKey("finish")){
 						PolygonObject poly = new PolygonObject(world, new Vector2((x + 0.6f) * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale(), (y + 1) * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale()), BodyType.StaticBody, ((TiledMapTileLayer) tiledMap.getLayers().get(1)).getTileWidth() / 2 * mapRenderer.getUnitScale(), ((TiledMapTileLayer) tiledMap.getLayers().get(1)).getTileHeight() * mapRenderer.getUnitScale(), 1.0f, 0.0f, 0.0f, true, true, ContactFilters.CAT_MAP, ContactFilters.GROUP_WORLD, ContactFilters.MASK_MAP);
 						poly.getBody().setUserData(new FinishBodyData());
@@ -156,7 +160,7 @@ public class MapManager {
 				Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 				
 				if(object.getProperties().containsKey("name")){
-					ParticleEffect particleEffect = new ParticleEffect(Assets.get("ingame/particleeffects/" + object.getProperties().get("name") + ".p", ParticleEffect.class));
+					ParticleEffect particleEffect = new ParticleEffect(Assets.get("/ingame/particleeffects/" + object.getProperties().get("name") + ".p", ParticleEffect.class));
 					
 					float posX = (rectangle.getX() + (rectangle.getWidth() / 2) - (particleEffect.getEmitters().first().getSpawnWidth().getHighMax() / 2)) * mapRenderer.getUnitScale();
 					float posY = rectangle.getY() * mapRenderer.getUnitScale();

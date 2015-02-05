@@ -31,7 +31,7 @@ public class ItemLoader {
 					int castleBuildingLevelNeed = Integer.parseInt(props.getProperty("buildinglevel"));
 					Texture texture = null;
 					if(!props.getProperty("texture").equals("")){
-						texture = Assets.get(props.getProperty("texture").replace("$", "/"), Texture.class);
+						texture = Assets.get("/" + props.getProperty("texture").replace("$", "/"), Texture.class);
 					}
 					
 					if(type.equalsIgnoreCase("weapon")){
