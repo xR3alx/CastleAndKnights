@@ -23,7 +23,6 @@ public class SpriteAnimationUserData extends DrawUserData{
 		this.playMode = playMode;
 		animation = new Animation(frameDuration, textures);
 		animation.setPlayMode(playMode);
-		
 	}
 	
 	@Override
@@ -58,6 +57,10 @@ public class SpriteAnimationUserData extends DrawUserData{
 	public void setFlip(boolean x, boolean y){
 		flipX = x;
 		flipY = y;
+	}
+	
+	public void reset(){
+		animationTime = 0;
 	}
 	
 	public boolean isFinished(float delta, boolean resetAnimationTimeOnComplete) {

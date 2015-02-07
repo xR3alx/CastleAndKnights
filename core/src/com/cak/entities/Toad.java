@@ -133,42 +133,55 @@ public class Toad extends Entity {
 	@Override
 	public void update() {
 		super.update();
-		if(entityBodyData.turn){
-			turn(false);
-		}
 		checkInput();
 		body.setTransform(body.getPosition(), 0);
 		playerSensorBody.setTransform(body.getPosition(), 0);
 		
-		
-		if(entityPlayerSensorBodyData.follow){
-			Entity followEntity = IngameScreen.getEntityManager().getEntity(entityPlayerSensorBodyData.playerId);
-			
-			if(followEntity.body.getPosition().x < body.getPosition().x){
-				turn(true);
-			}else{
-				if(left && !right){
-					turn(false);
+		if(!entityBodyData.turn){
+			if(entityPlayerSensorBodyData.follow){
+				Entity followEntity = IngameScreen.getEntityManager().getEntity(entityPlayerSensorBodyData.playerId);
+				
+				if(followEntity.body.getPosition().x < body.getPosition().x){
+					if(!left){
+						right = true;
+						turn();
+					}
+				}else if(followEntity.body.getPosition().x > body.getPosition().x){
+					if(!right){
+						left = true;
+						turn();
+					}
 				}
 			}
+		}else{
+			turn();
 		}
 		
 		
-		if(enemyWeaponBodyData.attacking && attackingStamina >= 100){
-			if(attackingStamina > 100){
+		if(enemyWeaponBodyData.hitPlayer){
+			if(attackingStamina >= 100){
 				enemyWeaponBodyData.start();
 				attackingStamina = 0;
-			}
-			
-			if(enemyWeaponBodyData.isFinished(Gdx.graphics.getDeltaTime(), true)){
-				enemyWeaponBodyData.stop();
-				enemyWeaponBodyData.canAttack = true;
-				enemyWeaponBodyData.attacking = false;
+
+				if(!enemyWeaponBodyData.damaged){
+					Entity attackedEntity = IngameScreen.getEntityManager().getEntity(enemyWeaponBodyData.attackingId);
+					attackedEntity.health-=enemyWeaponBodyData.damage;
+					enemyWeaponBodyData.damaged = true;
+				}
+				
+				if(enemyWeaponBodyData.isFinished(Gdx.graphics.getDeltaTime(), true)){
+					enemyWeaponBodyData.damaged = false;
+					enemyWeaponBodyData.stop();
+				}
+			}else{
+				if(attackingStamina <= 100){
+					attackingStamina+=51;
+				}
 			}
 		}else{
-			if(attackingStamina <= 100){
-				attackingStamina+=51;
-			}
+			enemyWeaponBodyData.canAttack = true;
+			enemyWeaponBodyData.reset();
+			enemyWeaponBodyData.stop();
 		}
 		
 		
@@ -195,12 +208,10 @@ public class Toad extends Entity {
 		if(left){
 			body.setLinearVelocity(-movespeed, body.getLinearVelocity().y);
 			move = true;
-			this.left = true;
 		}
 		if(right){
 			body.setLinearVelocity(+movespeed, body.getLinearVelocity().y);
 			move = true;
-			this.left = false;
 		}
 		
 		if(move && !left && !right){
@@ -220,11 +231,11 @@ public class Toad extends Entity {
 		}
 	}
 	
-	public void turn(boolean left){
+	public void turn(){
 		if(right){
 			this.left = true;
 			right = false;
-		}else if(!left){
+		}else{
 			right = true;
 			this.left = false;
 		}

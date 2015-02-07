@@ -72,10 +72,6 @@ public class MapManager {
 					&& (particleEffect.getEmitters().get(0).getX()) < ((camera.position.x + camera.viewportWidth / 2) * mapRenderer.getUnitScale())
 					&& (particleEffect.getEmitters().get(0).getY()) > ((camera.position.y - camera.viewportHeight / 2) * mapRenderer.getUnitScale())
 					&& (particleEffect.getEmitters().get(0).getY()) < ((camera.position.y + camera.viewportHeight / 2) * mapRenderer.getUnitScale())){
-//			if((particleEffect.getEmitters().get(0).getX()) > (-200 * mapRenderer.getUnitScale())
-//					&& (particleEffect.getEmitters().get(0).getX()) < (200 * mapRenderer.getUnitScale())
-//					&& (particleEffect.getEmitters().get(0).getY()) > (-200 * mapRenderer.getUnitScale())
-//					&& (particleEffect.getEmitters().get(0).getY()) < (200 * mapRenderer.getUnitScale())){
 				particleEffect.draw(spriteBatch, delta);
 			}
 		}

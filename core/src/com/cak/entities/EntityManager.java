@@ -12,10 +12,8 @@ public class EntityManager {
 	private World world;
 	private RayHandler rayHandler;
 	private ArrayList<Entity> entities;
-	private Player player;
 	
 	private boolean playerSpawned;
-	private int entityCount;
 	
 	public EntityManager(World world, RayHandler rayHandler){
 		entities = new ArrayList<Entity>();
@@ -25,8 +23,8 @@ public class EntityManager {
 	
 	public void update(boolean left, boolean right, boolean jump, boolean attack){
 		if(playerSpawned){
-			player.checkInput(left, right, jump, attack);
-			player.update();
+			((Player) entities.get(0)).checkInput(left, right, jump, attack);
+			((Player) entities.get(0)).update();
 		}
 		
 		for(Entity entity : entities){
@@ -38,16 +36,15 @@ public class EntityManager {
 	
 	public void spawnEntity(String type, Vector2 position){
 		if(type.equalsIgnoreCase("player")){
-			player = new Player(entityCount, world, rayHandler, position);
+			entities.add(new Player(entities.size(), world, rayHandler, position));
 			playerSpawned = true;
 		}else if(type.equalsIgnoreCase("toad")){
-			entities.add(new Toad(entityCount, world, rayHandler, position));
+			entities.add(new Toad(entities.size(), world, rayHandler, position));
 		}
-		entityCount++;
 	}
 	
 	public int getEntityCount(){
-		return entityCount;
+		return entities.size();
 	}
 	
 	public Entity getEntity(int entityNumber){
@@ -57,7 +54,7 @@ public class EntityManager {
 	
 	
 	public Player getPlayer(){
-		return player;
+		return ((Player) entities.get(0));
 	}
 	
 	public boolean isPlayerSpawned(){

@@ -119,7 +119,7 @@ public class IngameScreen implements Screen {
 				
 				Main.changeScreen(new MenuScreen());
 			}else if(entityManager.getPlayer().health <= 0){
-				Main.notificationsManager.addNotification("Mission failed!", "You failed the mission. Be careful next time!");
+				Main.notificationsManager.addNotification("Mission failed!", "You died!\n Be careful next time!");
 				
 				Main.changeScreen(new MenuScreen());
 			}else if(Gdx.input.isKeyJustPressed(Keys.F12)){
@@ -185,19 +185,17 @@ public class IngameScreen implements Screen {
 					((EntityBodyData) bodyB.getUserData()).turn = true;
 				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EnemyWeaponBodyData){   // EnemyWeapon
 					if(((EnemyWeaponBodyData) bodyB.getUserData()).canAttack){
+						((EnemyWeaponBodyData) bodyB.getUserData()).hitPlayer = true;
+						System.out.println(((PlayerBodyData) bodyA.getUserData()).entityId);
 						((EnemyWeaponBodyData) bodyB.getUserData()).attackingId = ((PlayerBodyData) bodyA.getUserData()).entityId;
-						((EnemyWeaponBodyData) bodyB.getUserData()).attacking = true;
 						((EnemyWeaponBodyData) bodyB.getUserData()).canAttack = false;
-
-						entityManager.getPlayer().health -= ((EnemyWeaponBodyData) bodyB.getUserData()).damage;
 					}
 				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EnemyWeaponBodyData){
 					if(((EnemyWeaponBodyData) bodyA.getUserData()).canAttack){
+						((EnemyWeaponBodyData) bodyA.getUserData()).hitPlayer = true;
+						System.out.println(((PlayerBodyData) bodyB.getUserData()).entityId);
 						((EnemyWeaponBodyData) bodyA.getUserData()).attackingId = ((PlayerBodyData) bodyB.getUserData()).entityId;
-						((EnemyWeaponBodyData) bodyA.getUserData()).attacking = true;
 						((EnemyWeaponBodyData) bodyA.getUserData()).canAttack = false;
-
-						entityManager.getPlayer().health -= ((EnemyWeaponBodyData) bodyA.getUserData()).damage;
 					}
 				}
 			}
