@@ -62,9 +62,6 @@ public class Player extends Entity{
 		fixtureDefWeapon.density = 1.0f;
 		fixtureDefWeapon.friction = 0.0f;
 		fixtureDefWeapon.restitution = 0.0f;
-		fixtureDefWeapon.filter.categoryBits = ContactFilters.CAT_ENTITIES;
-		fixtureDefWeapon.filter.groupIndex = ContactFilters.GROUP_ENTITIES;
-		fixtureDefWeapon.filter.maskBits = ContactFilters.MASK_ENTITIES;
 		fixtureDefWeapon.isSensor = true;
 		PolygonShape shapeWeapon = new PolygonShape();
 		shapeWeapon.setAsBox(50 / IngameScreen.PIXELS_TO_METERS, 50 / IngameScreen.PIXELS_TO_METERS);

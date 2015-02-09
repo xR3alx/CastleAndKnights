@@ -32,7 +32,7 @@ public class Toad extends Entity {
 	private boolean move, left, right;
 	private PointLight light;
 	
-	private int attackingStamina;
+	private int attackingStamina, followTimer;
 
 	public Toad(int id, World world, RayHandler rayHandler, Vector2 position) {
 		super(id);
@@ -44,7 +44,7 @@ public class Toad extends Entity {
 		fixtureDef.density = 1.0f;
 		fixtureDef.friction = 0.0f;
 		fixtureDef.restitution = 0.0f;
-		fixtureDef.filter.categoryBits = ContactFilters.CAT_ENTITIES;
+		fixtureDef.filter.categoryBits = ContactFilters. CAT_ENTITIES;
 		fixtureDef.filter.groupIndex = ContactFilters.GROUP_ENTITIES;
 		fixtureDef.filter.maskBits = ContactFilters.MASK_ENTITIES;
 		PolygonShape shape = new PolygonShape();
@@ -68,9 +68,6 @@ public class Toad extends Entity {
 		fixtureDefWeapon.density = 1.0f;
 		fixtureDefWeapon.friction = 0.0f;
 		fixtureDefWeapon.restitution = 0.0f;
-		fixtureDefWeapon.filter.categoryBits = ContactFilters.CAT_ENTITIES;
-		fixtureDefWeapon.filter.groupIndex = ContactFilters.GROUP_ENTITIES;
-		fixtureDefWeapon.filter.maskBits = ContactFilters.MASK_ENTITIES;
 		fixtureDefWeapon.isSensor = true;
 		PolygonShape shapeWeapon = new PolygonShape();
 		shapeWeapon.setAsBox(50 / IngameScreen.PIXELS_TO_METERS, 50 / IngameScreen.PIXELS_TO_METERS);
@@ -96,9 +93,6 @@ public class Toad extends Entity {
 		fixtureDefPlayerSensor.density = 1.0f;
 		fixtureDefPlayerSensor.friction = 0.0f;
 		fixtureDefPlayerSensor.restitution = 0.0f;
-		fixtureDefPlayerSensor.filter.categoryBits = ContactFilters.CAT_ENTITIES;
-		fixtureDefPlayerSensor.filter.groupIndex = ContactFilters.GROUP_ENTITIES;
-		fixtureDefPlayerSensor.filter.maskBits = ContactFilters.MASK_ENTITIES;
 		fixtureDefPlayerSensor.isSensor = true;
 		CircleShape shapePlayerSensor = new CircleShape();
 		shapePlayerSensor.setRadius(10f);
@@ -139,21 +133,30 @@ public class Toad extends Entity {
 		
 		if(!entityBodyData.turn){
 			if(entityPlayerSensorBodyData.follow){
-				Entity followEntity = IngameScreen.getEntityManager().getEntity(entityPlayerSensorBodyData.playerId);
-				
-				if(followEntity.body.getPosition().x < body.getPosition().x){
-					if(!left){
-						right = true;
-						turn();
+				if(followTimer != 0){
+					Entity followEntity = IngameScreen.getEntityManager().getEntity(entityPlayerSensorBodyData.playerId);
+					
+					if(followEntity.body.getPosition().x+2.5f < body.getPosition().x){
+						if(!left){
+							right = true;
+							turn();
+						}
+					}else if(followEntity.body.getPosition().x-2.5f > body.getPosition().x){
+						if(!right){
+							left = true;
+							turn();
+						}
+					}else{
+						left = false;
+						right = false;
 					}
-				}else if(followEntity.body.getPosition().x > body.getPosition().x){
-					if(!right){
-						left = true;
-						turn();
-					}
+				}else{
+					followTimer--;
 				}
 			}
 		}else{
+			entityPlayerSensorBodyData.follow = false;
+			followTimer = 25;
 			turn();
 		}
 		

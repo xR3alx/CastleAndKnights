@@ -40,7 +40,7 @@ public class Assets {
 				assetManager.load(f.path(), Texture.class); 
 			}
 		}
-		assetManager.load(loadConfiguration + "/menu/gfx/imgs/apollox_logo_large.png", Texture.class);
+//		assetManager.load(loadConfiguration + "/menu/gfx/imgs/background_loadingScreen.png", Texture.class);
 	}
 	
 	public static boolean isLoaded(){
@@ -217,7 +217,9 @@ public class Assets {
 		
 		for (FileHandle f : Gdx.files.internal(loadConfiguration + "/menu/gfx/imgs/").list()) {
 			if(f.extension().equals("png") || f.extension().equals("jpg")){
-				assetManager.load(f.path(), Texture.class); 
+				if(!f.nameWithoutExtension().contains("loadingScreen")){
+					assetManager.load(f.path(), Texture.class); 
+				}
 			}
 		}
 		

@@ -1,12 +1,12 @@
 package com.cak.ingame;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import box2dLight.ConeLight;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -45,6 +45,8 @@ public class MapManager {
 	private int[] layers = {0, 1, 2, 3, 4, 5, 6};
 	public static final float unitScale = 0.1f;
 	
+	private boolean cameraPositonFirstSet;
+	
 	public MapManager(String mappath) {
 		tiledMap = Assets.get(mappath, TiledMap.class);
 		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 * unitScale);
@@ -59,7 +61,47 @@ public class MapManager {
 	}
 	
 	public void render(Vector2 playerPos){
-		camera.position.set(playerPos, 0);
+		if(!cameraPositonFirstSet){
+			camera.position.set(playerPos, 0);
+			cameraPositonFirstSet = true;
+		}
+		
+		if(camera.position.x < playerPos.x){
+			float distance = Vector2.dst(camera.position.x, 0, playerPos.x, 0);
+			
+			if(distance >= 2){
+				camera.position.x+=0.25f;
+			}else if(distance >= 1 && distance <= 2){
+				camera.position.x+=0.1f;
+			}
+		}else if(camera.position.x > playerPos.x){
+			float distance = Vector2.dst(camera.position.x, 0, playerPos.x, 0);
+			
+			if(distance >= 2){
+				camera.position.x-=0.25f;
+			}else if(distance >= 1 && distance <= 2){
+				camera.position.x-=0.1f;
+			}
+		}
+		
+		if(camera.position.y < playerPos.y){
+			float distance = Vector2.dst(0, camera.position.y, 0, playerPos.y);
+			
+			if(distance >= 2){
+				camera.position.y+=0.25f;
+			}else if(distance >= 1 && distance <= 2){
+				camera.position.y+=0.1f;
+			}
+		}else if(camera.position.y > playerPos.y){
+			float distance = Vector2.dst(0, camera.position.y, 0, playerPos.y);
+			
+			if(distance >= 2){
+				camera.position.y-=0.25f;
+			}else if(distance >= 1 && distance <= 2){
+				camera.position.y-=0.1f;
+			}
+		}
+		
 		camera.update();
 		
 		mapRenderer.setView(camera);
@@ -77,6 +119,7 @@ public class MapManager {
 		}
 	}
 	
+	@SuppressWarnings("static-access")
 	public void setupMap(RayHandler rayHandler, World world, EntityManager entityManager){
 		
 		String[] rgba = (String[]) ((String) tiledMap.getProperties().get("ambientcolor")).split(",");
@@ -89,7 +132,7 @@ public class MapManager {
 					if(((TiledMapTileLayer) tiledMap.getLayers().get("system")).getCell(x, y).getTile().getProperties().containsKey("p1")){
 						entityManager.spawnEntity("player", new Vector2(x * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale(), y * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale()));
 					}else if(((TiledMapTileLayer) tiledMap.getLayers().get("system")).getCell(x, y).getTile().getProperties().containsKey("finish")){
-						PolygonObject poly = new PolygonObject(world, new Vector2((x + 0.6f) * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale(), (y + 1) * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale()), BodyType.StaticBody, ((TiledMapTileLayer) tiledMap.getLayers().get(1)).getTileWidth() / 2 * mapRenderer.getUnitScale(), ((TiledMapTileLayer) tiledMap.getLayers().get(1)).getTileHeight() * mapRenderer.getUnitScale(), 1.0f, 0.0f, 0.0f, true, true, ContactFilters.CAT_MAP, ContactFilters.GROUP_WORLD, ContactFilters.MASK_MAP);
+						PolygonObject poly = new PolygonObject(world, new Vector2((x + 0.6f) * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale(), (y + 1) * IngameScreen.PIXELS_TO_METERS * mapRenderer.getUnitScale()), BodyType.StaticBody, ((TiledMapTileLayer) tiledMap.getLayers().get(1)).getTileWidth() / 2 * mapRenderer.getUnitScale(), ((TiledMapTileLayer) tiledMap.getLayers().get(1)).getTileHeight() * mapRenderer.getUnitScale(), 1.0f, 0.0f, 0.0f, true, true, ContactFilters.CAT_MAP, ContactFilters.GROUP_SCENERY, ContactFilters.MASK_MAP);
 						poly.getBody().setUserData(new FinishBodyData());
 					}
 				}
@@ -101,14 +144,14 @@ public class MapManager {
 			if(object instanceof RectangleMapObject) {
 				Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 				
-				PolygonObject poly = new PolygonObject(world, new Vector2((rectangle.x + rectangle.width / 2) * mapRenderer.getUnitScale(), (rectangle.y+ rectangle.height / 2) * mapRenderer.getUnitScale()), BodyType.StaticBody, rectangle.width * mapRenderer.getUnitScale(), rectangle.height * mapRenderer.getUnitScale(), 1.0f, 0.0f, 0.0f, false, true, ContactFilters.CAT_MAP, ContactFilters.GROUP_WORLD, ContactFilters.MASK_MAP);
+				PolygonObject poly = new PolygonObject(world, new Vector2((rectangle.x + rectangle.width / 2) * mapRenderer.getUnitScale(), (rectangle.y+ rectangle.height / 2) * mapRenderer.getUnitScale()), BodyType.StaticBody, rectangle.width * mapRenderer.getUnitScale(), rectangle.height * mapRenderer.getUnitScale(), 1.0f, 0.0f, 0.0f, false, true, ContactFilters.CAT_MAP, ContactFilters.GROUP_SCENERY, ContactFilters.MASK_MAP);
 				GroundBodyData groundBodyData = new GroundBodyData();
 				groundBodyData.height = (rectangle.height - 20) * mapRenderer.getUnitScale();
 				poly.getBody().setUserData(groundBodyData);
 			}else if(object instanceof EllipseMapObject) {
 				Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
 				
-				CircleObject circle = new CircleObject(world, new Vector2((ellipse.x + ellipse.width / 2) * mapRenderer.getUnitScale(), (ellipse.y + ellipse.height / 2) * mapRenderer.getUnitScale()), BodyType.StaticBody, ellipse.width / 2 * mapRenderer.getUnitScale(), 1.0f, 0.0f, 0.0f, false, true, ContactFilters.CAT_MAP, ContactFilters.GROUP_WORLD, ContactFilters.MASK_MAP);
+				CircleObject circle = new CircleObject(world, new Vector2((ellipse.x + ellipse.width / 2) * mapRenderer.getUnitScale(), (ellipse.y + ellipse.height / 2) * mapRenderer.getUnitScale()), BodyType.StaticBody, ellipse.width / 2 * mapRenderer.getUnitScale(), 1.0f, 0.0f, 0.0f, false, true, ContactFilters.CAT_MAP, ContactFilters.GROUP_SCENERY, ContactFilters.MASK_MAP);
 				GroundBodyData groundBodyData = new GroundBodyData();
 				groundBodyData.height = (ellipse.width / 2 - 20) * mapRenderer.getUnitScale();
 				circle.getBody().setUserData(groundBodyData);

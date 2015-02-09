@@ -2,7 +2,6 @@ package com.cak.screens;
 
 import box2dLight.RayHandler;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -10,48 +9,35 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.cak.assets.Assets;
-import com.cak.bodydata.EnemyWeaponBodyData;
-import com.cak.bodydata.EntityBodyData;
-import com.cak.bodydata.EntityPlayerSensorBodyData;
-import com.cak.bodydata.EntityTurnBodyData;
-import com.cak.bodydata.FinishBodyData;
-import com.cak.bodydata.GroundBodyData;
-import com.cak.bodydata.InstantDeathBodyData;
-import com.cak.bodydata.PlayerBodyData;
 import com.cak.bodyuserdata.DrawUserData;
 import com.cak.entities.EntityManager;
 import com.cak.files.MissionsLoader.Mission;
 import com.cak.files.UserData;
+import com.cak.ingame.ContactManager;
 import com.cak.ingame.GUIManager;
 import com.cak.ingame.MapManager;
 import com.cak.main.Main;
 
 public class IngameScreen implements Screen {
 	
-	private SpriteBatch spriteBatch;
+	private static EntityManager entityManager;
+	private static Mission mission;
+	private static boolean finishReached;
+
 	
+	private SpriteBatch spriteBatch;
 	
 	private World world;
 	private RayHandler rayHandler;
 	private Box2DDebugRenderer debugRenderer;
 	
-	
-	private static EntityManager entityManager;
 	private MapManager mapManager;
 	private GUIManager guiManager;
 	
-	
-	
-	private Mission mission;
 	private Array<Body> tempBodies;
-	private boolean isLoaded, finishReached;
+	private boolean isLoaded;
 	private int monsterKillMoneyReward, monsterKillExpReward;
 	
 	public static final float PIXELS_TO_METERS = 32, METERS_TO_PIXELS = 0.32f;
@@ -62,7 +48,7 @@ public class IngameScreen implements Screen {
 	public boolean worldSleep = true;
 	
 	public IngameScreen(Mission mission) {
-		this.mission = mission;
+		IngameScreen.mission = mission;
 	}
 	
 	@SuppressWarnings("static-access")
@@ -71,7 +57,7 @@ public class IngameScreen implements Screen {
 		spriteBatch = new SpriteBatch();
 			
 		world = new World(gravity, worldSleep);
-		contactListener();
+		world.setContactListener(new ContactManager());
 		tempBodies = new Array<Body>();
 		rayHandler = new RayHandler(world);
 		rayHandler.setGammaCorrection(true);
@@ -143,108 +129,6 @@ public class IngameScreen implements Screen {
 	}
 
 	
-	private void contactListener(){
-		ContactListener contactListener = new ContactListener() {
-
-			@Override
-			public void beginContact(Contact contact) {
-				Body bodyA = contact.getFixtureA().getBody();
-				Body bodyB = contact.getFixtureB().getBody();
-				
-				if((bodyA.getUserData() instanceof PlayerBodyData || bodyA.getUserData() instanceof EntityBodyData) && bodyB.getUserData() instanceof GroundBodyData){   // Ground
-					contact.setRestitution(0);
-					if(bodyA.getPosition().y > (bodyB.getPosition().y + ((GroundBodyData) bodyB.getUserData()).height)){
-						entityManager.getPlayer().setCanJump(true);
-					}
-				}else if((bodyB.getUserData() instanceof PlayerBodyData || bodyB.getUserData() instanceof EntityBodyData) && bodyA.getUserData() instanceof GroundBodyData){
-					contact.setRestitution(0);
-					if(bodyB.getPosition().y > (bodyA.getPosition().y + ((GroundBodyData) bodyA.getUserData()).height)){
-						entityManager.getPlayer().setCanJump(true);
-					}
-				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof FinishBodyData){   // Finish
-					finishReached = true;
-				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof FinishBodyData){
-					finishReached = true;
-				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EntityPlayerSensorBodyData){   // EntityPlayerSensor
-					if(!((EntityPlayerSensorBodyData) bodyB.getUserData()).follow){
-						((EntityPlayerSensorBodyData) bodyB.getUserData()).playerId = ((PlayerBodyData) bodyA.getUserData()).entityId;
-						((EntityPlayerSensorBodyData) bodyB.getUserData()).follow = true;
-					}
-				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EntityPlayerSensorBodyData){
-					if(!((EntityPlayerSensorBodyData) bodyA.getUserData()).follow){
-						((EntityPlayerSensorBodyData) bodyA.getUserData()).playerId = ((PlayerBodyData) bodyB.getUserData()).entityId;
-						((EntityPlayerSensorBodyData) bodyA.getUserData()).follow = true;
-					}
-				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof InstantDeathBodyData){   // InstantDeath
-					entityManager.getPlayer().health = 0;
-				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof InstantDeathBodyData){
-					entityManager.getPlayer().health = 0;
-				}else if(bodyA.getUserData() instanceof EntityBodyData && bodyB.getUserData() instanceof EntityTurnBodyData){   // EntityTurn
-					((EntityBodyData) bodyA.getUserData()).turn = true;
-				}else if(bodyB.getUserData() instanceof EntityBodyData && bodyA.getUserData() instanceof EntityTurnBodyData){
-					((EntityBodyData) bodyB.getUserData()).turn = true;
-				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EnemyWeaponBodyData){   // EnemyWeapon
-					if(((EnemyWeaponBodyData) bodyB.getUserData()).canAttack){
-						((EnemyWeaponBodyData) bodyB.getUserData()).hitPlayer = true;
-						System.out.println(((PlayerBodyData) bodyA.getUserData()).entityId);
-						((EnemyWeaponBodyData) bodyB.getUserData()).attackingId = ((PlayerBodyData) bodyA.getUserData()).entityId;
-						((EnemyWeaponBodyData) bodyB.getUserData()).canAttack = false;
-					}
-				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EnemyWeaponBodyData){
-					if(((EnemyWeaponBodyData) bodyA.getUserData()).canAttack){
-						((EnemyWeaponBodyData) bodyA.getUserData()).hitPlayer = true;
-						System.out.println(((PlayerBodyData) bodyB.getUserData()).entityId);
-						((EnemyWeaponBodyData) bodyA.getUserData()).attackingId = ((PlayerBodyData) bodyB.getUserData()).entityId;
-						((EnemyWeaponBodyData) bodyA.getUserData()).canAttack = false;
-					}
-				}
-			}
-			
-			@Override
-			public void endContact(Contact contact) {
-				Body bodyA = contact.getFixtureA().getBody();
-				Body bodyB = contact.getFixtureB().getBody();		
-				
-				
-				if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof GroundBodyData){   // Ground
-					if(bodyA.getPosition().y > (bodyB.getPosition().y + ((GroundBodyData) bodyB.getUserData()).height)){
-						entityManager.getPlayer().setCanJump(false);
-					}
-				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof GroundBodyData){
-					if(bodyB.getPosition().y > (bodyA.getPosition().y + ((GroundBodyData) bodyA.getUserData()).height)){
-						entityManager.getPlayer().setCanJump(false);
-					}
-				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EnemyWeaponBodyData){   // EnemyWeapon
-					((EnemyWeaponBodyData) bodyB.getUserData()).hitPlayer = false;
-				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EnemyWeaponBodyData){
-					((EnemyWeaponBodyData) bodyA.getUserData()).hitPlayer = false;
-				}else if(bodyA.getUserData() instanceof PlayerBodyData && bodyB.getUserData() instanceof EntityPlayerSensorBodyData){   // EntityPlayerSensor
-					if(((EntityPlayerSensorBodyData) bodyB.getUserData()).follow){
-						((EntityPlayerSensorBodyData) bodyB.getUserData()).follow = false;
-					}
-				}else if(bodyB.getUserData() instanceof PlayerBodyData && bodyA.getUserData() instanceof EntityPlayerSensorBodyData){
-					if(!((EntityPlayerSensorBodyData) bodyA.getUserData()).follow){
-						((EntityPlayerSensorBodyData) bodyB.getUserData()).follow = false;
-					}
-				}
-			}
-			
-			@Override
-			public void preSolve(Contact contact, Manifold oldManifold) {
-			}
-			
-			@Override
-			public void postSolve(Contact contact, ContactImpulse impulse) {
-			}
-			
-		};
-		world.setContactListener(contactListener);
-	}
-	
-	
-	
-	
-	
 	@Override
 	public void pause() {
 		if(isLoaded){
@@ -280,11 +164,20 @@ public class IngameScreen implements Screen {
 	}
 
 	
+	
+	public static void setFinishedReached(boolean bool){
+		finishReached = bool;
+	}
+	
+	public static boolean getFinishedReached(){
+		return finishReached;
+	}
+	
 	public static EntityManager getEntityManager(){
 		return entityManager;
 	}
 	
-	public Mission getCurrentMission(){
+	public static Mission getCurrentMission(){
 		return mission;
 	}
 }

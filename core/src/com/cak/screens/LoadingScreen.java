@@ -24,7 +24,6 @@ public class LoadingScreen implements Screen {
 	private Label loadingLabel;
 	private SpriteActor backgroundLabel;
 	
-	
 	private OrthographicCamera camera;
 	private SpriteBatch spriteBatch;
 	
@@ -48,8 +47,8 @@ public class LoadingScreen implements Screen {
 		mainTable.setHeight(camera.viewportHeight);
 		
 		loadingLabel = new Label("Loading", Assets.getSkin(), "fixedsys_24");
-		if(Assets.isFileLoaded("/menu/gfx/imgs/apollox_logo_large.png")){
-			backgroundLabel = new SpriteActor(Assets.get("/menu/gfx/imgs/apollox_logo_large.png", Texture.class), 0, 0, false, false, MenuScreen.getCamera());
+		if(Assets.isFileLoaded("/menu/gfx/imgs/background_loadingScreen.png")){
+			backgroundLabel = new SpriteActor(Assets.get("/menu/gfx/imgs/background_loadingScreen.png", Texture.class), 0, 0, false, false, MenuScreen.getCamera());
 //			backgroundLabel.setScale(2);
 			backgroundLabel.centerActor(camera);
 		}
@@ -71,8 +70,8 @@ public class LoadingScreen implements Screen {
 		stage.draw();
 		
 		if(!logoSetup){
-			if(Assets.isFileLoaded("/menu/gfx/imgs/apollox_logo_large.png")){
-				backgroundLabel = new SpriteActor(Assets.get("/menu/gfx/imgs/apollox_logo_large.png", Texture.class), 0, 0, false, false, MenuScreen.getCamera());
+			if(Assets.isFileLoaded("/menu/gfx/imgs/background_loadingScreen.png")){
+				backgroundLabel = new SpriteActor(Assets.get("/menu/gfx/imgs/background_loadingScreen.png", Texture.class), 0, 0, false, false, MenuScreen.getCamera());
 //				backgroundLabel.setScale(2);
 				backgroundLabel.centerActor(camera);
 				
